@@ -1,3 +1,9 @@
 page-home {
-
+  .prof-pic {
+    width: 15vw;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+  }
 }
