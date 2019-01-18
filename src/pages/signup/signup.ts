@@ -7,7 +7,7 @@ import {
   LoadingController,
   NavController
 } from "ionic-angular";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthProvider } from "../../providers/auth/auth";
 import { EmailValidator } from "../../validators/email";
 import { HomePage } from "../home/home";
@@ -27,21 +27,14 @@ export class SignupPage {
     public authProvider: AuthProvider,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    formBuilder: FormBuilder
-  ) {
-    this.signupForm = formBuilder.group({
-      email: [
-        "",
-        Validators.compose([Validators.required, EmailValidator.isValid])
-      ],
-      first: [""],
-      last: [""],
-      password: [
-        "",
-        Validators.compose([Validators.minLength(6), Validators.required])
-      ]
-    });
-  }
+    formBuilder: FormBuilder) {
+      this.signupForm = formBuilder.group({
+        email: new FormControl('', Validators.compose([Validators.required, EmailValidator.isValid])),
+        first: new FormControl(''),
+        last: new FormControl(''),
+        password: new FormControl('', Validators.compose([Validators.minLength(6), Validators.required]))
+      });
+    }
 
   signupUser(): void {
     if (!this.signupForm.valid) {

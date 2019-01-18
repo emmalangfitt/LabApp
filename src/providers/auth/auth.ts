@@ -28,6 +28,10 @@ export class AuthProvider {
           .database()
           .ref(`/userProfile/${newUserCredential.user.uid}/last`)
           .set(last);
+        firebase
+          .database()
+          .ref(`/userProfile/${newUserCredential.user.uid}/rating`)
+          .set(5.0);
       })
       .catch(error => {
         console.error(error);

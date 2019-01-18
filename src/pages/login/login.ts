@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { Alert, AlertController, IonicPage, Loading, LoadingController, NavController } from 'ionic-angular';
+import { Alert, AlertController, Loading, LoadingController, NavController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
 import { TabsPage } from '../tabs/tabs';
 import { EmailValidator } from '../../validators/email';
 
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

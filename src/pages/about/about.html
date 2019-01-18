@@ -1,16 +1,21 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Your Profile</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="logOut()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding text-center>
   <ion-img class="prof-pic" src="../assets/imgs/logo.png"></ion-img>
-  <h1>Firstname Lastname</h1>
+  <h1>{{userProfile?.first}} {{userProfile?.last}}</h1>
   <ion-icon name="star"></ion-icon>
   <ion-icon name="star"></ion-icon>
   <ion-icon name="star"></ion-icon>
   <ion-icon name="star"></ion-icon>
-  <ion-icon name="star-outline"></ion-icon>
-  <p>4.2</p>
+  <ion-icon name="star"></ion-icon>
+  <p>{{userProfile?.rating | number:'1.1'}}</p>
 </ion-content>
