@@ -6,6 +6,7 @@ import {
 } from "ionic-angular";
 import { ProfileProvider } from "../../providers/profile/profile";
 import { AuthProvider } from "../../providers/auth/auth";
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: "page-about",
@@ -30,7 +31,7 @@ export class AboutPage {
 
   logOut(): void {
     this.authProvider.logoutUser().then(() => {
-      this.navCtrl.setRoot("LoginPage");
+      this.navCtrl.setRoot(LoginPage);
     });
   }
 
