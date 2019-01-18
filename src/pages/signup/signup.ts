@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthProvider } from "../../providers/auth/auth";
 import { EmailValidator } from "../../validators/email";
 import { HomePage } from "../home/home";
+import { TabsPage } from "../tabs/tabs";
 
 @IonicPage()
 @Component({
@@ -33,6 +34,8 @@ export class SignupPage {
         "",
         Validators.compose([Validators.required, EmailValidator.isValid])
       ],
+      first: [""],
+      last: [""],
       password: [
         "",
         Validators.compose([Validators.minLength(6), Validators.required])
@@ -47,12 +50,14 @@ export class SignupPage {
       );
     } else {
       const email: string = this.signupForm.value.email;
+      const first: string = this.signupForm.value.first;
+      const last: string = this.signupForm.value.last;
       const password: string = this.signupForm.value.password;
 
-      this.authProvider.signupUser(email, password).then(
+      this.authProvider.signupUser(email, password, first, last).then(
         user => {
           this.loading.dismiss().then(() => {
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(TabsPage);
           });
         },
         error => {

@@ -3,6 +3,7 @@ import { Alert, AlertController, IonicPage, Loading, LoadingController, NavContr
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
+import { TabsPage } from '../tabs/tabs';
 import { EmailValidator } from '../../validators/email';
 
 @IonicPage()
@@ -58,7 +59,7 @@ export class LoginPage {
       this.authProvider.loginUser(email, password).then(
         authData => {
           this.loading.dismiss().then(() => {
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(TabsPage);
           });
         },
         error => {
