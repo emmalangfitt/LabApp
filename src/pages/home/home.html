@@ -12,7 +12,15 @@
           <img class="prof-pic" src="../assets/imgs/logo.png" />
           <ion-card-content>
             <ion-card-title>{{ prof?.first }} {{ prof?.last }}</ion-card-title>
-            <p> Rating: {{ prof?.rating }} </p>
+            <ionic3-star-rating
+                  activeIcon = "ios-star"
+                  defaultIcon = "ios-star-outline"
+                  activeColor = "#488aff"
+                  defaultColor = "#f4f4f4"
+                  readonly="false"
+                  [rating]="5">
+              </ionic3-star-rating>
+            <p> Rating: {{ prof?.rating | number:'1.1'}} </p>
           </ion-card-content>
         </ion-card>
       </ion-col>

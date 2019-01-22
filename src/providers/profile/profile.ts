@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import firebase, { User } from 'firebase/app';
 import 'firebase/database';
-import { AuthProvider } from '../providers/auth/auth';
+import { AuthProvider } from '../auth/auth';
 
 @Injectable()
 export class ProfileProvider {

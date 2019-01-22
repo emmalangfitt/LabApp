@@ -7,6 +7,7 @@ import {
 import { ProfileProvider } from "../../providers/profile/profile";
 import { AuthProvider } from "../../providers/auth/auth";
 import { LoginPage } from '../login/login';
+import { Events } from 'ionic-angular';
 
 @Component({
   selector: "page-about",
@@ -20,8 +21,13 @@ export class AboutPage {
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public authProvider: AuthProvider,
-    public profileProvider: ProfileProvider
-  ) {}
+    public profileProvider: ProfileProvider,
+    public events: Events
+  ) {
+    events.subscribe('star-rating:changed', (starRating) => {
+      this.userProfile.rating = starRating;
+    });
+  }
 
   ionViewDidLoad() {
     this.profileProvider.getUserProfile().on("value", userProfileSnapshot => {

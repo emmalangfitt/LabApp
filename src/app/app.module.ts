@@ -12,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
 import { ProfileProvider } from '../providers/profile/profile';
+import { StarRatingModule } from 'ionic3-star-rating';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProfileProvider } from '../providers/profile/profile';
   ],
   imports: [
     BrowserModule,
+    StarRatingModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
