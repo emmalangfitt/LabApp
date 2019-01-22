@@ -7,12 +7,12 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
-      <ion-col col-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let prof of profs">
+      <ion-col col-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let prof of profList">
         <ion-card text-center>
-          <img class="prof-pic" src={{prof.image}} />
+          <img class="prof-pic" src="../assets/imgs/logo.png" />
           <ion-card-content>
-            <ion-card-title>{{ prof.first }} {{ prof.last }}</ion-card-title>
-            <p> Rating: {{ prof.rate }} </p>
+            <ion-card-title>{{ prof?.first }} {{ prof?.last }}</ion-card-title>
+            <p> Rating: {{ prof?.rating }} </p>
           </ion-card-content>
         </ion-card>
       </ion-col>

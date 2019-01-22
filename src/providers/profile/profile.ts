@@ -6,6 +6,7 @@ import { AuthProvider } from '../providers/auth/auth';
 @Injectable()
 export class ProfileProvider {
   public userProfile: firebase.database.Reference;
+  public profListRef: firebase.database.Reference;
   public currentUser: User;
 
   constructor() {
@@ -13,8 +14,13 @@ export class ProfileProvider {
       if(user){
         this.currentUser = user;
         this.userProfile = firebase.database().ref(`/userProfile/${user.uid}`);
+        this.profListRef = firebase.database().ref(`/userProfile/`);
       }
     });
+  }
+
+  getAllProfiles(): firebase.database.Reference {
+    return this.profListRef;
   }
 
   getUserProfile(): firebase.database.Reference {
