@@ -17,8 +17,14 @@
         defaultIcon = "ios-star-outline"
         activeColor = "#488aff"
         defaultColor = "#f4f4f4"
-        readonly="true"
+        readonly="false"
         [rating]=userProfile?.rating>
     </ionic3-star-rating>
   <p>Rating: {{userProfile?.rating | number:'1.1-1'}}</p>
+
+  <button ion-button (click)="updateEmail()">Update Email</button>
+  <button ion-button (click)="updatePassword()">Update Password</button>
+  <button ion-button (click)="updateName()">Update Name</button>
+
+
 </ion-content>

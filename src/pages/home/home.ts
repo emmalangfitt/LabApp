@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Alert, AlertController } from 'ionic-angular';
 import { ProfileProvider } from "../../providers/profile/profile";
 
 @Component({
@@ -13,7 +13,8 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    public profileProvider: ProfileProvider) {
+    public profileProvider: ProfileProvider,
+    public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -30,4 +31,13 @@ export class HomePage {
   });
   }
 
+  rateUser(): void {
+    let alert: Alert = this.alertCtrl.create({
+      buttons: [
+        { text: 'Cancel' },
+        { text: 'Save'}
+      ]
+    });
+    alert.present();
+  }
 }

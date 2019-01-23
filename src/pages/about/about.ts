@@ -26,7 +26,7 @@ export class AboutPage {
     public events: Events
   ) {
     events.subscribe('star-rating:changed', (starRating) => {
-      //this.profileProvider.updateRating((starRating + this.rating )/ 2);
+      this.profileProvider.updateRating((starRating + this.rating )/ 2);
     });
   }
 
@@ -41,5 +41,70 @@ export class AboutPage {
     this.authProvider.logoutUser().then(() => {
       this.navCtrl.setRoot(LoginPage);
     });
+  }
+
+  updateEmail(): void {
+    let alert: Alert = this.alertCtrl.create({
+      inputs: [{ name: 'newEmail', placeholder: 'Your new email' },
+      { name: 'password', placeholder: 'Your password', type: 'password' }],
+      buttons: [
+        { text: 'Cancel' },
+        { text: 'Save',
+          handler: data => {
+            this.profileProvider
+              .updateEmail(data.newEmail, data.password)
+              .then(() => { console.log('Email Changed Successfully'); })
+              .catch(error => { console.log('ERROR: ' + error.message); });
+        }}]
+    });
+    alert.present();
+  }
+
+  updatePassword(): void {
+    let alert: Alert = this.alertCtrl.create({
+      inputs: [
+        { name: 'newPassword', placeholder: 'New password', type: 'password' },
+        { name: 'oldPassword', placeholder: 'Old password', type: 'password' }],
+      buttons: [
+        { text: 'Cancel' },
+        { text: 'Save',
+          handler: data => {
+            this.profileProvider.updatePassword(
+              data.newPassword,
+              data.oldPassword
+            );
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  updateName(): void {
+    const alert: Alert = this.alertCtrl.create({
+      message: "Your first name & last name",
+      inputs: [
+        {
+          name: "firstName",
+          placeholder: "Your first name",
+          value: this.userProfile.firstName
+        },
+        {
+          name: "lastName",
+          placeholder: "Your last name",
+          value: this.userProfile.lastName
+        }
+      ],
+      buttons: [
+        { text: "Cancel" },
+        {
+          text: "Save",
+          handler: data => {
+            this.profileProvider.updateName(data.firstName, data.lastName);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }
