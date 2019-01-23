@@ -17,10 +17,10 @@
                   defaultIcon = "ios-star-outline"
                   activeColor = "#488aff"
                   defaultColor = "#f4f4f4"
-                  readonly="false"
-                  [rating]="5">
+                  readonly="true"
+                  [rating]=prof?.rating>
               </ionic3-star-rating>
-            <p> Rating: {{ prof?.rating | number:'1.1'}} </p>
+            <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
           </ion-card-content>
         </ion-card>
       </ion-col>

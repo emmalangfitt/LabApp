@@ -31,6 +31,10 @@ export class ProfileProvider {
     return this.userProfile.update({ first, last });
   }
 
+  updateRating(rating: number): Promise<any> {
+    return this.userProfile.update({rating});
+  }
+
   updateEmail(newEmail: string, password: string): Promise<any> {
     const credential: AuthCredential = firebase.auth.
       EmailAuthProvider.credential(
@@ -50,8 +54,8 @@ export class ProfileProvider {
   }
 
   updatePassword(newPassword: string, oldPassword: string): Promise<any> {
-    const credential: AuthCredential = firebase.auth
-      .EmailAuthProvider.credential(
+    const credential: AuthCredential = firebase.auth.
+      EmailAuthProvider.credential(
         this.currentUser.email,
         oldPassword
       );

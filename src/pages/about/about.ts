@@ -16,6 +16,7 @@ import { Events } from 'ionic-angular';
 
 export class AboutPage {
   public userProfile: any;
+  public rating: number;
 
   constructor(
     public navCtrl: NavController,
@@ -25,13 +26,14 @@ export class AboutPage {
     public events: Events
   ) {
     events.subscribe('star-rating:changed', (starRating) => {
-      this.userProfile.rating = starRating;
+      //this.profileProvider.updateRating((starRating + this.rating )/ 2);
     });
   }
 
   ionViewDidLoad() {
     this.profileProvider.getUserProfile().on("value", userProfileSnapshot => {
       this.userProfile = userProfileSnapshot.val();
+      this.rating = userProfileSnapshot.val().rating;
     });
   }
 
@@ -40,5 +42,4 @@ export class AboutPage {
       this.navCtrl.setRoot(LoginPage);
     });
   }
-
 }
