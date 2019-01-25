@@ -27,7 +27,12 @@ export class HomePage {
     this.profRef.on('value', profList => {
       let profs = [];
       profList.forEach(prof => {
-        profs.push(prof.val());
+        profs.push({
+          id: prof.key,
+          first: prof.val().first,
+          last: prof.val().last,
+          rating: prof.val().rating
+        });
         return false;
       });
 
@@ -98,6 +103,5 @@ export class HomePage {
         return false;
       }
     });
-    console.log(q, this.profList.length);
   }
 }
