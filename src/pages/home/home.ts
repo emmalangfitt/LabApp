@@ -13,6 +13,8 @@ export class HomePage {
 
   public profList: Array<any>;
   public enteredRating: number;
+  public loadedProfList:Array<any>;
+  public profRef:firebase.database.Reference;
 
   constructor(
     public navCtrl: NavController,
@@ -20,6 +22,19 @@ export class HomePage {
     public alertCtrl: AlertController,
     public events: Events
   ) {
+    this.profRef = firebase.database().ref('/userProfile/');
+
+    this.profRef.on('value', profList => {
+      let profs = [];
+      profList.forEach(prof => {
+        profs.push(prof.val());
+        return false;
+      });
+
+      this.profList = profs;
+      this.loadedProfList = profs;
+    });
+
     events.subscribe('star-rating:changed', (starRating) => {
       this.enteredRating = starRating;
     });
@@ -41,6 +56,48 @@ export class HomePage {
   }
 
   saveRating(id: string, profRating: number): void {
-    firebase.database().ref(`/userProfile/` + id).update({rating: ((profRating + this.enteredRating)/ 2)});
+    if (id != (this.profileProvider.getCurrentUser())) {
+      firebase.database().ref(`/userProfile/` + id).update({rating: ((profRating + this.enteredRating)/ 2)});
+    }
+  }
+
+  isSelf(id: string): boolean {
+    if (id != (this.profileProvider.getCurrentUser())) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  isSelfString(id: string): string {
+    if (id != (this.profileProvider.getCurrentUser())) {
+      return "false";
+    } else {
+      return "true";
+    }
+  }
+
+  initializeItems(): void {
+    this.profList = this.loadedProfList;
+  }
+
+  getItems(searchbar) {
+    // Reset items back to all of the items
+    this.initializeItems();
+    // set q to the value of the searchbar
+    var q = searchbar.srcElement.value;
+    // if the value is an empty string don't filter the items
+    if (!q) {
+      return;
+    }
+    this.profList = this.profList.filter((v) => {
+      if(v.first && q || v.lant && q) {
+        if (v.first.toLowerCase().indexOf(q.toLowerCase()) > -1 || v.last.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+    console.log(q, this.profList.length);
   }
 }

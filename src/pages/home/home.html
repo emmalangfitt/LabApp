@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-searchbar (ionInput)="getItems($event)" placeholder="Find User by Name"></ion-searchbar>
   <ion-grid>
     <ion-row>
       <ion-col col-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let prof of profList">
@@ -18,10 +19,10 @@
                   defaultIcon = "ios-star-outline"
                   activeColor = "#488aff"
                   defaultColor = "#f4f4f4"
-                  readonly="false"
+                  [readonly]= "isSelfString(prof?.id)"
                   [rating]=prof?.rating>
             </ionic3-star-rating>
-            <button ion-button (click)="saveRating(prof?.id, prof?.rating)">Save</button>
+            <button ion-button [disabled]="isSelf(prof?.id)" (click)="saveRating(prof?.id, prof?.rating)">Save</button>
           </ion-card-content>
         </ion-card>
       </ion-col>

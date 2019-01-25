@@ -27,6 +27,10 @@ export class ProfileProvider {
     return this.userProfile;
   }
 
+  getCurrentUser(): string {
+    return this.currentUser.uid;
+  }
+
   updateName(first: string, last: string): Promise<any> {
     return this.userProfile.update({ first, last });
   }
