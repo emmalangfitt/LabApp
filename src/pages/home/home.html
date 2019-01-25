@@ -8,19 +8,20 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let prof of profList">
-        <ion-card text-center (click)="rateUser()">
+        <ion-card text-center>
           <img class="prof-pic" src="../assets/imgs/logo.png" />
           <ion-card-content>
             <ion-card-title>{{ prof?.first }} {{ prof?.last }}</ion-card-title>
+            <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
             <ionic3-star-rating
                   activeIcon = "ios-star"
                   defaultIcon = "ios-star-outline"
                   activeColor = "#488aff"
                   defaultColor = "#f4f4f4"
-                  readonly="true"
+                  readonly="false"
                   [rating]=prof?.rating>
-              </ionic3-star-rating>
-            <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
+            </ionic3-star-rating>
+            <button ion-button (click)="saveRating(prof?.id, prof?.rating)">Save</button>
           </ion-card-content>
         </ion-card>
       </ion-col>

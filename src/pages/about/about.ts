@@ -26,7 +26,7 @@ export class AboutPage {
     public events: Events
   ) {
     events.subscribe('star-rating:changed', (starRating) => {
-      this.profileProvider.updateRating((starRating + this.rating )/ 2);
+      //this.profileProvider.updateRating((starRating + this.rating )/ 2);
     });
   }
 
