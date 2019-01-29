@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import firebase, { User } from 'firebase/app';
 import 'firebase/database';
 import { AuthProvider } from '../auth/auth';
+import { AuthCredential } from 'firebase/auth';
 
 @Injectable()
 export class ProfileProvider {
