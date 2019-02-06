@@ -9,7 +9,6 @@ export class AuthProvider {
 
   public listOfRatings: number[] = new Array();
   public numUsers: number = 1;
-  public photo: string = "";
 
   loginUser(email: string, password: string): Promise<any> {
     return firebase.auth().signInWithEmailAndPassword(email, password);
@@ -40,10 +39,6 @@ export class AuthProvider {
           .database()
           .ref(`/userProfile/${newUserCredential.user.uid}/num`)
           .set(this.numUsers);
-        firebase
-          .database()
-          .ref(`/userProfile/${newUserCredential.user.uid}/photo`)
-          .set(this.photo);
 
         this.listOfRatings = new Array();
         for (var i = 0; i < 30; i++) {

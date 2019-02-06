@@ -24,6 +24,7 @@ export class AboutPage {
   public currentImage: any;
   public num: number;
   public captureDataUrl: string;
+  public photo: string;
 
   constructor(
     public navCtrl: NavController,
@@ -43,6 +44,7 @@ export class AboutPage {
       this.userProfile = userProfileSnapshot.val();
       this.rating = userProfileSnapshot.val().rating;
       this.num = userProfileSnapshot.val().num;
+      this.photo = userProfileSnapshot.val().photo;
     });
   }
 
@@ -122,7 +124,11 @@ export class AboutPage {
       quality : 50,
       destinationType : this.camera.DestinationType.DATA_URL,
       sourceType : this.camera.PictureSourceType.CAMERA,
-      encodingType: this.camera.EncodingType.JPEG,
+      encodingType : this.camera.EncodingType.JPEG,
+      targetHeight : 500,
+      targetWidth : 500,
+      allowEdit : true,
+      cameraDirection: 1
     }
 
     this.camera.getPicture(options).then((imageData) => {
@@ -135,10 +141,12 @@ export class AboutPage {
 
       imageRef.putString(captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
         // Do something here when the data is succesfully uploaded!
+        this.profileProvider.getUserPhoto().set(captureDataUrl);
       });
     }, (err) => {
       // Handle error
     });
+
   }
 
 }

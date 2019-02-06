@@ -10,7 +10,7 @@
     <ion-row>
       <ion-col col-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let prof of profList">
         <ion-card text-center>
-          <img class="prof-pic" src="../assets/imgs/logo.png" />
+          <img class="prof-pic" src="{{prof?.photo}}"/>
           <ion-card-content>
             <ion-card-title>{{ prof?.first }} {{ prof?.last }}</ion-card-title>
             <p> Participant Number: {{ prof?.num }} </p>

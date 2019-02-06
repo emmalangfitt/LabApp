@@ -32,7 +32,8 @@ export class HomePage {
           first: prof.val().first,
           last: prof.val().last,
           rating: prof.val().rating,
-          num: prof.val().num
+          num: prof.val().num,
+          photo: prof.val().photo
         });
         return false;
       });
@@ -55,7 +56,8 @@ export class HomePage {
         first: snap.val().first,
         last: snap.val().last,
         rating: snap.val().rating,
-        num: snap.val().num
+        num: snap.val().num,
+        photo: snap.val().photo
       });
         return false;
       });
