@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content padding text-center>
-  <ion-img class="prof-pic" src="../assets/imgs/logo.png"></ion-img>
+  <ion-img class="prof-pic" src="currentImage" *ngIf="currentImage"></ion-img>
   <h1>{{userProfile?.first}} {{userProfile?.last}}</h1>
   <ionic3-star-rating
         activeIcon = "ios-star"
@@ -25,6 +25,7 @@
   <button ion-button (click)="updateEmail()">Update Email</button>
   <button ion-button (click)="updatePassword()">Update Password</button>
   <button ion-button (click)="updateName()">Update Name</button>
+  <button ion-button (click)="takePicture()">Take Photo</button>
 
 
 </ion-content>

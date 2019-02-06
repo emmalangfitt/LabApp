@@ -8,11 +8,12 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { AuthProvider } from '../providers/auth/auth';
 import { ProfileProvider } from '../providers/profile/profile';
 import { StarRatingModule } from 'ionic3-star-rating';
+import { Camera } from '@ionic-native/camera/ngx';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { StarRatingModule } from 'ionic3-star-rating';
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     ProfileProvider

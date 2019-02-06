@@ -9,6 +9,9 @@ export class ProfileProvider {
   public userProfile: firebase.database.Reference;
   public profListRef: firebase.database.Reference;
   public currentUser: User;
+  public numRef: firebase.database.Reference;
+  public ratingsRef: firebase.database.Reference;
+  public photoRef: firebase.database.Reference;
 
   constructor() {
     firebase.auth().onAuthStateChanged( user => {
@@ -16,6 +19,9 @@ export class ProfileProvider {
         this.currentUser = user;
         this.userProfile = firebase.database().ref(`/userProfile/${user.uid}`);
         this.profListRef = firebase.database().ref(`/userProfile/`);
+        this.numRef = firebase.database().ref(`/userProfile/${user.uid}/num`);
+        this.ratingsRef = firebase.database().ref(`/userProfile/${user.uid}/ratings/`);
+        this.photoRef = firebase.database().ref(`/userProfile/${user.uid}/photo`);
       }
     });
   }
@@ -26,6 +32,18 @@ export class ProfileProvider {
 
   getUserProfile(): firebase.database.Reference {
     return this.userProfile;
+  }
+
+  getUserNum(): firebase.database.Reference {
+    return this.numRef;
+  }
+
+  getUserRatings(): firebase.database.Reference {
+    return this.ratingsRef;
+  }
+
+  getUserPhoto(): firebase.database.Reference {
+    return this.photoRef;
   }
 
   getCurrentUser(): string {

@@ -8,6 +8,10 @@ import { ProfileProvider } from "../../providers/profile/profile";
 import { AuthProvider } from "../../providers/auth/auth";
 import { LoginPage } from '../login/login';
 import { Events } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/storage';
 
 @Component({
   selector: "page-about",
@@ -17,13 +21,17 @@ import { Events } from 'ionic-angular';
 export class AboutPage {
   public userProfile: any;
   public rating: number;
+  public currentImage: any;
+  public num: number;
+  public captureDataUrl: string;
 
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public authProvider: AuthProvider,
     public profileProvider: ProfileProvider,
-    public events: Events
+    public events: Events,
+    private camera: Camera
   ) {
     events.subscribe('star-rating:changed', (starRating) => {
       //this.profileProvider.updateRating((starRating + this.rating )/ 2);
@@ -34,6 +42,7 @@ export class AboutPage {
     this.profileProvider.getUserProfile().on("value", userProfileSnapshot => {
       this.userProfile = userProfileSnapshot.val();
       this.rating = userProfileSnapshot.val().rating;
+      this.num = userProfileSnapshot.val().num;
     });
   }
 
@@ -107,4 +116,29 @@ export class AboutPage {
     });
     alert.present();
   }
+
+  takePicture() {
+    const options: CameraOptions = {
+      quality : 50,
+      destinationType : this.camera.DestinationType.DATA_URL,
+      sourceType : this.camera.PictureSourceType.CAMERA,
+      encodingType: this.camera.EncodingType.JPEG,
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      var captureDataUrl = 'data:image/jpeg;base64,' + imageData;
+      let storageRef = firebase.storage().ref();
+      // Create a timestamp as filename
+      const filename = Math.floor(Date.now() / 1000);
+      // Create a reference to 'images/todays-date.jpg'
+      const imageRef = storageRef.child(`images/${filename}.jpg`);
+
+      imageRef.putString(captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
+        // Do something here when the data is succesfully uploaded!
+      });
+    }, (err) => {
+      // Handle error
+    });
+  }
+
 }

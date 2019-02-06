@@ -31,7 +31,8 @@ export class HomePage {
           id: prof.key,
           first: prof.val().first,
           last: prof.val().last,
-          rating: prof.val().rating
+          rating: prof.val().rating,
+          num: prof.val().num
         });
         return false;
       });
@@ -53,20 +54,21 @@ export class HomePage {
         id: snap.key,
         first: snap.val().first,
         last: snap.val().last,
-        rating: snap.val().rating
+        rating: snap.val().rating,
+        num: snap.val().num
       });
         return false;
       });
     });
   }
 
-  saveRating(id: string, profRating: number): void {
+  saveRating(id: string, profRating: number, num: number): void {
     if (id != (this.profileProvider.getCurrentUser())) {
       firebase.database().ref(`/userProfile/` + id).update({rating: ((profRating + this.enteredRating)/ 2)});
     }
   }
 
-  isSelf(id: string): boolean {
+  isSelf(id: string, num: number): boolean {
     if (id != (this.profileProvider.getCurrentUser())) {
       return false;
     } else {
@@ -74,7 +76,7 @@ export class HomePage {
     }
   }
 
-  isSelfString(id: string): string {
+  isSelfString(id: string, num: number): string {
     if (id != (this.profileProvider.getCurrentUser())) {
       return "false";
     } else {

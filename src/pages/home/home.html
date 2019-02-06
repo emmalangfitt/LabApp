@@ -13,7 +13,7 @@
           <img class="prof-pic" src="../assets/imgs/logo.png" />
           <ion-card-content>
             <ion-card-title>{{ prof?.first }} {{ prof?.last }}</ion-card-title>
-            <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
+            <p> Participant Number: {{ prof?.num }} </p>
             <ionic3-star-rating
                   activeIcon = "ios-star"
                   defaultIcon = "ios-star-outline"
@@ -22,7 +22,8 @@
                   [readonly]= "isSelfString(prof?.id)"
                   [rating]=prof?.rating>
             </ionic3-star-rating>
-            <button ion-button [disabled]="isSelf(prof?.id)" (click)="saveRating(prof?.id, prof?.rating)">Save</button>
+            <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
+            <button ion-button [disabled]="isSelf(prof?.id)" (click)="saveRating(prof?.id, prof?.rating, prof?.num)">Save</button>
           </ion-card-content>
         </ion-card>
       </ion-col>
