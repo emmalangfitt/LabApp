@@ -8,7 +8,6 @@ export class AuthProvider {
   constructor() {}
 
   public listOfRatings: number[] = new Array();
-  public numUsers: number = 1;
 
   loginUser(email: string, password: string): Promise<any> {
     return firebase.auth().signInWithEmailAndPassword(email, password);
@@ -35,20 +34,25 @@ export class AuthProvider {
           .database()
           .ref(`/userProfile/${newUserCredential.user.uid}/rating`)
           .set(2.5);
-        firebase
-          .database()
-          .ref(`/userProfile/${newUserCredential.user.uid}/num`)
-          .set(this.numUsers);
+
+        var numUsers = 0;
+        firebase.database().ref(`/userProfile/`).once("value", function(snapshot) {
+          console.log('children ' + snapshot.numChildren());
+          numUsers = snapshot.numChildren();
+          firebase
+            .database()
+            .ref(`/userProfile/${newUserCredential.user.uid}/num`)
+            .set(numUsers);
+        });
 
         this.listOfRatings = new Array();
         for (var i = 0; i < 30; i++) {
-          if ( (i+1) == this.numUsers ) {
+          if ( (i+1) == numUsers ) {
             this.listOfRatings.push(1);
           } else {
             this.listOfRatings.push(0);
           }
         }
-        this.numUsers = this.numUsers+1;
 
         firebase
           .database()

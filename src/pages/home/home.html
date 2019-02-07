@@ -19,11 +19,11 @@
                   defaultIcon = "ios-star-outline"
                   activeColor = "#488aff"
                   defaultColor = "#f4f4f4"
-                  [readonly]= "isSelfString(prof?.id)"
+                  [readonly]= "isSelfString(prof?.id, prof?.num)"
                   [rating]=prof?.rating>
             </ionic3-star-rating>
             <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
-            <button ion-button [disabled]="isSelf(prof?.id)" (click)="saveRating(prof?.id, prof?.rating, prof?.num)">Save</button>
+            <button ion-button [disabled]="isSelf(prof?.id, prof?.num)" (click)="saveRating(prof?.id, prof?.rating, prof?.num)">Save</button>
           </ion-card-content>
         </ion-card>
       </ion-col>

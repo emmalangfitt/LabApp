@@ -38,8 +38,8 @@ export class ProfileProvider {
     return this.numRef;
   }
 
-  getUserRatings(): firebase.database.Reference {
-    return this.ratingsRef;
+  getUserRatings(num: number): firebase.database.Reference {
+    return firebase.database().ref('/userProfile/' + this.getCurrentUser() + '/ratings/' + num);
   }
 
   getUserPhoto(): firebase.database.Reference {

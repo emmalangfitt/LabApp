@@ -67,11 +67,20 @@ export class HomePage {
   saveRating(id: string, profRating: number, num: number): void {
     if (id != (this.profileProvider.getCurrentUser())) {
       firebase.database().ref(`/userProfile/` + id).update({rating: ((profRating + this.enteredRating)/ 2)});
+      this.profileProvider.getUserRatings(num-1).set(1);
     }
   }
 
   isSelf(id: string, num: number): boolean {
-    if (id != (this.profileProvider.getCurrentUser())) {
+    var ratingsRef = this.profileProvider.getUserRatings(num-1);
+    var bool;
+    ratingsRef.on('value', function(snapshot) {
+      bool = snapshot.val();
+    });
+
+    console.log(bool);
+    if ((id != (this.profileProvider.getCurrentUser())) &&
+    ( bool == 0 ) ) {
       return false;
     } else {
       return true;
@@ -79,7 +88,14 @@ export class HomePage {
   }
 
   isSelfString(id: string, num: number): string {
-    if (id != (this.profileProvider.getCurrentUser())) {
+    var ratingsRef = this.profileProvider.getUserRatings(num-1);
+    var bool;
+    ratingsRef.on('value', function(snapshot) {
+      bool = snapshot.val();
+    });
+
+    if ((id != (this.profileProvider.getCurrentUser())) &&
+    ( bool == 0 ) ) {
       return "false";
     } else {
       return "true";
