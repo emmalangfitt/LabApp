@@ -62,12 +62,31 @@ export class HomePage {
         return false;
       });
     });
+
+    setInterval(() => {
+      this.resetRating();
+    }, 5*60*1000);
+    //setInterval(this.resetRating, 10*1000);
   }
 
   saveRating(id: string, profRating: number, num: number): void {
     if (id != (this.profileProvider.getCurrentUser())) {
       firebase.database().ref(`/userProfile/` + id).update({rating: ((profRating + this.enteredRating)/ 2)});
       this.profileProvider.getUserRatings(num-1).set(1);
+    }
+  }
+
+  resetRating(): void {
+    var numRef = this.profileProvider.getUserNum();
+    var num;
+    numRef.on('value', function(snapshot) {
+      num = snapshot.val();
+    });
+
+    for (var i = 0; i < 30; i++) {
+      if (i != num-1) {
+        this.profileProvider.getUserRatings(i).set(0);
+      }
     }
   }
 
