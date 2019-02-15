@@ -26,6 +26,8 @@
   <button ion-button (click)="updatePassword()">Update Password</button>
   <button ion-button (click)="updateName()">Update Name</button>
   <button ion-button (click)="takePicture()">Take Photo</button>
+  <button ion-button (click)="goToPreSurvey()" [disabled]="this.profileProvider.preSurveySubmitted">Pre-Survey</button>
+  <button ion-button (click)="goToPostSurvey()" [disabled]="this.profileProvider.postSurveySubmitted">Post-Survey</button>
 
 
 </ion-content>

@@ -25,6 +25,7 @@ export class AboutPage {
   public num: number;
   public captureDataUrl: string;
   public photo: string;
+  public submitted: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -117,6 +118,14 @@ export class AboutPage {
       ]
     });
     alert.present();
+  }
+
+  goToPreSurvey():void {
+    this.navCtrl.push('PreSurveyPage');
+  }
+
+  goToPostSurvey():void {
+    this.navCtrl.push('PostSurveyPage');
   }
 
   takePicture() {

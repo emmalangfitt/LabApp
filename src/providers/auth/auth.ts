@@ -34,6 +34,12 @@ export class AuthProvider {
           .database()
           .ref(`/userProfile/${newUserCredential.user.uid}/rating`)
           .set(2.5);
+        firebase
+          .database()
+          .ref(`/userProfile/${newUserCredential.user.uid}/preSurvey/`);
+        firebase
+          .database()
+          .ref(`/userProfile/${newUserCredential.user.uid}/postSurvey/`);
 
         var numUsers = 0;
         firebase.database().ref(`/userProfile/`).once("value", function(snapshot) {

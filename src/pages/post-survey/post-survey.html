@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Post-Survey</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding text-center>
+  <form [formGroup]="postSurveyForm" (submit)="submit()" novalidate>
+
+    <h5>Selection question goes here?</h5>
+    <ion-list radio-group formControlName="option">
+      <ion-item>
+        <ion-label>option one</ion-label>
+        <ion-radio slot="start" value="biff" checked></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>option two</ion-label>
+        <ion-radio slot="start" value="griff"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>option three</ion-label>
+        <ion-radio slot="start" value="buford"></ion-radio>
+      </ion-item>
+    </ion-list>
+
+    <h5>Rating question goes here?</h5>
+    <ion-range min="0" max="7" [(ngModel)]="saturation" color="primary" snaps="true" formControlName="rating">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>7</ion-label>
+    </ion-range>
+
+    <h5>Short answer question goes here?</h5>
+    <ion-item>
+      <ion-textarea formControlName="shortAnswer" placeholder="Enter your answer here"></ion-textarea>
+    </ion-item>
+
+    <h5>Rank your interaction from blank to blank</h5>
+    <ion-list reorder="true" (ionItemReorder)="reorderItem($event)">
+        <ion-item *ngFor="let prof of profList">
+          <ion-label>
+            {{ prof?.first }} {{ prof?.last }}
+          </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <h5>Warning: You may not edit the survey once you've submitted your responses.</h5>
+    <button ion-button type="submit">Submit</button>
+  </form>
+</ion-content>

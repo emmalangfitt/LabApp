@@ -8,16 +8,22 @@ import { AuthCredential } from 'firebase/auth';
 export class ProfileProvider {
   public userProfile: firebase.database.Reference;
   public profListRef: firebase.database.Reference;
+  public preSurvey: firebase.database.Reference;
+  public postSurvey: firebase.database.Reference;
   public currentUser: User;
   public numRef: firebase.database.Reference;
   public ratingsRef: firebase.database.Reference;
   public photoRef: firebase.database.Reference;
+  public preSurveySubmitted: boolean = false;
+  public postSurveySubmitted: boolean = false;
 
   constructor() {
     firebase.auth().onAuthStateChanged( user => {
       if(user){
         this.currentUser = user;
         this.userProfile = firebase.database().ref(`/userProfile/${user.uid}`);
+        this.preSurvey = firebase.database().ref(`/userProfile/${user.uid}/preSurvey/`);
+        this.postSurvey = firebase.database().ref(`/userProfile/${user.uid}/postSurvey/`);
         this.profListRef = firebase.database().ref(`/userProfile/`);
         this.numRef = firebase.database().ref(`/userProfile/${user.uid}/num`);
         this.ratingsRef = firebase.database().ref(`/userProfile/${user.uid}/ratings/`);
@@ -56,6 +62,17 @@ export class ProfileProvider {
 
   updateRating(rating: number): Promise<any> {
     return this.userProfile.update({rating});
+  }
+
+  updatePreSurvey(year: string, gender:
+    string, major: string, option: string,
+    rating: number, shortAnswer: string): Promise<any> {
+      return this.preSurvey.update({year, gender, major, option, rating, shortAnswer});
+  }
+
+  updatePostSurvey(option: string, rating: number,
+    shortAnswer: string, profList: Array<any>): Promise<any> {
+      return this.postSurvey.update({option, rating, shortAnswer, profList});
   }
 
   updateEmail(newEmail: string, password: string): Promise<any> {
