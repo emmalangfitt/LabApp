@@ -71,8 +71,8 @@ export class ProfileProvider {
   }
 
   updatePostSurvey(option: string, rating: number,
-    shortAnswer: string, profList: Array<any>): Promise<any> {
-      return this.postSurvey.update({option, rating, shortAnswer, profList});
+    shortAnswer: string, profList: Array<any>, checkedProfList: Array<any>): Promise<any> {
+      return this.postSurvey.update({option, rating, shortAnswer, profList, checkedProfList});
   }
 
   updateEmail(newEmail: string, password: string): Promise<any> {

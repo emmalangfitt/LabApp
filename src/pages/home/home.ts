@@ -97,7 +97,6 @@ export class HomePage {
       bool = snapshot.val();
     });
 
-    console.log(bool);
     if ((id != (this.profileProvider.getCurrentUser())) &&
     ( bool == 0 ) ) {
       return false;

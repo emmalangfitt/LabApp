@@ -39,7 +39,8 @@ export class PostSurveyPage {
         profList.forEach(prof => {
           profs.push({
             first: prof.val().first,
-            last: prof.val().last
+            last: prof.val().last,
+            isChecked: false
           });
           return false;
         });
@@ -56,8 +57,15 @@ export class PostSurveyPage {
     const option: string = this.postSurveyForm.value.option;
     const rating: number = this.postSurveyForm.value.rating;
     const shortAnswer: string = this.postSurveyForm.value.shortAnswer;
+    var checkedProfList = [];
 
-    this.profileProvider.updatePostSurvey(option, rating, shortAnswer, this.profList);
+    this.profList.forEach(prof => {
+      if (prof.isChecked) {
+        checkedProfList.push(prof);
+      }
+    });
+
+    this.profileProvider.updatePostSurvey(option, rating, shortAnswer, this.profList, checkedProfList);
 
     this.navCtrl.pop();
     this.profileProvider.postSurveySubmitted = true;
