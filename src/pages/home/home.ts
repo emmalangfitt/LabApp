@@ -15,6 +15,7 @@ export class HomePage {
   public enteredRating: number;
   public loadedProfList:Array<any>;
   public profRef:firebase.database.Reference;
+  public consent: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -66,7 +67,8 @@ export class HomePage {
     setInterval(() => {
       this.resetRating();
     }, 5*60*1000);
-    //setInterval(this.resetRating, 10*1000);
+
+    this.requestConsent();
   }
 
   saveRating(id: string, profRating: number, num: number): void {
@@ -141,5 +143,33 @@ export class HomePage {
         return false;
       }
     });
+  }
+
+  public requestConsent(): void {
+    this.consentAlert('consent message goes here it will be super long').then(confirm => {
+      this.profileProvider.setConsent(confirm);
+    })
+  }
+
+  private consentAlert(message: string): Promise<boolean> {
+    let resolveFunction: (confirm: boolean) => void;
+    let promise = new Promise<boolean>(resolve => {
+      resolveFunction = resolve;
+    });
+
+    let alert = this.alertCtrl.create({
+      title: 'Consent Collection',
+      message: message,
+      enableBackdropDismiss: false,
+      buttons: [ {
+        text: 'Cancel',
+        handler: () => resolveFunction(false)
+      }, {
+        text: 'I Agree',
+        handler: () => resolveFunction(true)
+      } ]
+    });
+    alert.present();
+    return promise;
   }
 }

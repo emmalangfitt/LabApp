@@ -20,7 +20,7 @@
                   activeColor = "#488aff"
                   defaultColor = "#f4f4f4"
                   [readonly]= "isSelfString(prof?.id, prof?.num)"
-                  [rating]=prof?.rating>
+                  [rating]=prof?.rating> 
             </ionic3-star-rating>
             <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
             <button ion-button [disabled]="isSelf(prof?.id, prof?.num)" (click)="saveRating(prof?.id, prof?.rating, prof?.num)">Save</button>

@@ -10,6 +10,7 @@ export class ProfileProvider {
   public profListRef: firebase.database.Reference;
   public preSurvey: firebase.database.Reference;
   public postSurvey: firebase.database.Reference;
+  public interactedWith: firebase.database.Reference;
   public currentUser: User;
   public numRef: firebase.database.Reference;
   public ratingsRef: firebase.database.Reference;
@@ -24,6 +25,7 @@ export class ProfileProvider {
         this.userProfile = firebase.database().ref(`/userProfile/${user.uid}`);
         this.preSurvey = firebase.database().ref(`/userProfile/${user.uid}/preSurvey/`);
         this.postSurvey = firebase.database().ref(`/userProfile/${user.uid}/postSurvey/`);
+        this.interactedWith = firebase.database().ref(`/userProfile/${user.uid}/postSurvey/checkedProfList`);
         this.profListRef = firebase.database().ref(`/userProfile/`);
         this.numRef = firebase.database().ref(`/userProfile/${user.uid}/num`);
         this.ratingsRef = firebase.database().ref(`/userProfile/${user.uid}/ratings/`);
@@ -62,6 +64,10 @@ export class ProfileProvider {
 
   updateRating(rating: number): Promise<any> {
     return this.userProfile.update({rating});
+  }
+
+  setConsent(consent: boolean): Promise<any> {
+    return this.userProfile.update({consent});
   }
 
   updatePreSurvey(year: string, gender:

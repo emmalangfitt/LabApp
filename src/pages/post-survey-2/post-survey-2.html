@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Post-Survey</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding text-center>
+  <form [formGroup]="postSurveyForm" (submit)="submit()" novalidate>
+
+    <h5>Rank your interaction from blank to blank</h5>
+    <ion-list reorder="true" (ionItemReorder)="reorderItem($event)">
+        <ion-item *ngFor="let prof of interactedProfList">
+          <ion-avatar item-left>
+            <img [src]="prof?.photo"/>
+          </ion-avatar>
+          <ion-label>
+            {{ prof?.first }} {{ prof?.last }}
+          </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <h5>Warning: You may not edit the survey once you've submitted your responses.</h5>
+    <button ion-button type="submit">Submit</button>
+
+  </form>
+</ion-content>
