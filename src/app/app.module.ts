@@ -12,7 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { AuthProvider } from '../providers/auth/auth';
 import { ProfileProvider } from '../providers/profile/profile';
-import { StarRatingModule } from 'ionic3-star-rating';
+import { Ionic3StarRatingComponent } from '../components/ionic3-star-rating/ionic3-star-rating';
 import { Camera } from '@ionic-native/camera/ngx';
 
 @NgModule({
@@ -21,11 +21,11 @@ import { Camera } from '@ionic-native/camera/ngx';
     AboutPage,
     HomePage,
     TabsPage,
-    LoginPage
+    LoginPage,
+    Ionic3StarRatingComponent
   ],
   imports: [
     BrowserModule,
-    StarRatingModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
