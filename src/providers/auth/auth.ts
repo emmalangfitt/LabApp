@@ -36,6 +36,10 @@ export class AuthProvider {
           .set(2.5);
         firebase
           .database()
+          .ref(`/userProfile/${newUserCredential.user.uid}/role`)
+          .set(false);
+        firebase
+          .database()
           .ref(`/userProfile/${newUserCredential.user.uid}/photo`)
           .set('https://firebasestorage.googleapis.com/v0/b/labapp-55218.appspot.com/o/logo.png?alt=media&token=20b4b85d-a03f-4893-a531-195c87438386');
         firebase

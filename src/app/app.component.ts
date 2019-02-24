@@ -13,10 +13,11 @@ import { environment } from './environment';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any;
+  public rootPage: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     firebase.initializeApp(environment);
+    firebase.database().ref(`/parties/`);
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();

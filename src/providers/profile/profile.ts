@@ -11,6 +11,7 @@ export class ProfileProvider {
   public preSurvey: firebase.database.Reference;
   public postSurvey: firebase.database.Reference;
   public interactedWith: firebase.database.Reference;
+  public roleRef: firebase.database.Reference;
   public currentUser: User;
   public numRef: firebase.database.Reference;
   public ratingsRef: firebase.database.Reference;
@@ -30,6 +31,7 @@ export class ProfileProvider {
         this.numRef = firebase.database().ref(`/userProfile/${user.uid}/num`);
         this.ratingsRef = firebase.database().ref(`/userProfile/${user.uid}/ratings/`);
         this.photoRef = firebase.database().ref(`/userProfile/${user.uid}/photo`);
+        this.roleRef = firebase.database().ref(`/userProfile/${user.uid}/role`);
       }
     });
   }
@@ -44,6 +46,10 @@ export class ProfileProvider {
 
   getUserNum(): firebase.database.Reference {
     return this.numRef;
+  }
+
+  getUserRole(): firebase.database.Reference {
+    return this.roleRef;
   }
 
   getUserRatings(num: number): firebase.database.Reference {

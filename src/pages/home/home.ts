@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Alert, AlertController } from 'ionic-angular';
+import { NavController, Alert, AlertController, App } from 'ionic-angular';
 import { ProfileProvider } from "../../providers/profile/profile";
 import { Events } from 'ionic-angular';
 import firebase from 'firebase/app';
@@ -21,7 +21,8 @@ export class HomePage {
     public navCtrl: NavController,
     public profileProvider: ProfileProvider,
     public alertCtrl: AlertController,
-    public events: Events
+    public events: Events,
+    public app: App
   ) {
     this.profRef = firebase.database().ref('/userProfile/');
 
@@ -34,7 +35,8 @@ export class HomePage {
           last: prof.val().last,
           rating: prof.val().rating,
           num: prof.val().num,
-          photo: prof.val().photo
+          photo: prof.val().photo,
+          role: prof.val().role
         });
         return false;
       });
@@ -49,17 +51,23 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+    if (this.isAdmin()) {
+      return;
+    }
+
     this.profileProvider.getAllProfiles().on("value", profListSnapshot => {
     this.profList = [];
     profListSnapshot.forEach(snap => {
-      this.profList.push({
-        id: snap.key,
-        first: snap.val().first,
-        last: snap.val().last,
-        rating: snap.val().rating,
-        num: snap.val().num,
-        photo: snap.val().photo
-      });
+      if(snap.val().role != "admin") {
+        this.profList.push({
+          id: snap.key,
+          first: snap.val().first,
+          last: snap.val().last,
+          rating: snap.val().rating,
+          num: snap.val().num,
+          photo: snap.val().photo
+        });
+      }
         return false;
       });
     });
@@ -104,6 +112,22 @@ export class HomePage {
       return false;
     } else {
       return true;
+    }
+  }
+
+  isAdmin(): boolean {
+    var roleRef = this.profileProvider.getUserRole();
+    var admin;
+
+    roleRef.once('value').then((snapshot) => {
+      admin = snapshot.val();
+    });
+
+    if (admin = "admin") {
+      this.app.getRootNav().setRoot('AdminPage');
+      return true;
+    } else {
+      return false;
     }
   }
 

@@ -14,6 +14,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { ProfileProvider } from '../providers/profile/profile';
 import { Ionic3StarRatingComponent } from '../components/ionic3-star-rating/ionic3-star-rating';
 import { Camera } from '@ionic-native/camera/ngx';
+import { PartyProvider } from '../providers/party/party';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { Camera } from '@ionic-native/camera/ngx';
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    ProfileProvider
+    ProfileProvider,
+    PartyProvider
   ]
 })
 export class AppModule {}

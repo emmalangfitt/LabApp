@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Admin</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="logOut()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding text-center>
+  <ion-list>
+      <ion-item *ngFor="let party of partyList">
+        <button ion-button>{{party?.name}}</button>
+      </ion-item>
+  </ion-list>
+
+  <button ion-button>add</button>
+</ion-content>
