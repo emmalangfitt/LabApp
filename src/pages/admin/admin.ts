@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { AuthProvider } from "../../providers/auth/auth";
 import { PartyProvider } from "../../providers/party/party";
 import { LoginPage } from '../login/login';
+import firebase from 'firebase/app';
 
 /**
  * Generated class for the AdminPage page.
@@ -23,7 +24,8 @@ export class AdminPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public partyProvider: PartyProvider,
-    public authProvider: AuthProvider
+    public authProvider: AuthProvider,
+    public alertCtrl: AlertController
   ) {}
 
   ionViewDidLoad() {
@@ -31,8 +33,8 @@ export class AdminPage {
     this.partyList = [];
     partySnapshot.forEach(snap => {
       this.partyList.push({
-        name: snap.val().name,
-        number: snap.val().number
+        number: snap.val().number,
+        active: snap.val().active,
       });
         return false;
       });
@@ -45,4 +47,61 @@ export class AdminPage {
     });
   }
 
+  makeActive(num: number): void {
+    var numParties = this.partyProvider.getNumParties();
+    for(var i = 1; i <= numParties; i++) {
+      if( i != num) {
+        firebase.database().ref(`/parties/${i}/active`).set(false);
+      } else {
+        firebase.database().ref(`/parties/${i}/active`).set(true);
+      }
+    }
+  }
+
+  fillType(active: boolean): string {
+    if (active) {
+      return "primary";
+    } else {
+      return "secondary";
+    }
+  }
+
+  public addPartyAlert(): void {
+
+    let alert = this.alertCtrl.create({
+      title: 'Add Party',
+      enableBackdropDismiss: false,
+      inputs: [
+        {
+          name: 'noratings',
+          value: 'noratings',
+          label: "No Rating Others",
+          type: 'checkbox',
+        },
+        {
+          name: 'variedstart',
+          value: 'variedstart',
+          label: "Varied Initial Ratings",
+          type: 'checkbox',
+        },
+        {
+          name: 'weightedrankings',
+          value: 'weightedrankings',
+          label: "Weighted Ratings",
+          type: 'checkbox',
+        },
+      ],
+      buttons: [ {
+        text: 'Cancel'
+      },
+      {
+        text: 'Add',
+        handler: (data) => {
+          this.partyProvider.addParty(data);
+        }
+      } ]
+    });
+
+    alert.present();
+  }
 }

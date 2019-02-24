@@ -51,7 +51,6 @@ export class AuthProvider {
 
         var numUsers = 0;
         firebase.database().ref(`/userProfile/`).once("value", function(snapshot) {
-          console.log('children ' + snapshot.numChildren());
           numUsers = snapshot.numChildren();
           firebase
             .database()

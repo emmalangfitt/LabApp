@@ -13,9 +13,9 @@
 <ion-content padding text-center>
   <ion-list>
       <ion-item *ngFor="let party of partyList">
-        <button ion-button>{{party?.name}}</button>
+        <button ion-button [color]=fillType(party?.active) (click)="makeActive(party?.number)">Party {{party?.number}}</button>
       </ion-item>
   </ion-list>
 
-  <button ion-button>add</button>
+  <button ion-button (click)="addPartyAlert()">add</button>
 </ion-content>
