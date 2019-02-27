@@ -5,13 +5,23 @@ import 'firebase/database';
 @Injectable()
 export class PartyProvider {
   public partyList: firebase.database.Reference;
+  public activePartyNum: firebase.database.Reference;
 
   constructor() {
     this.partyList = firebase.database().ref(`/parties/`);
+    this.activePartyNum = firebase.database().ref(`/active`);
   }
 
   getPartyList(): firebase.database.Reference {
     return this.partyList;
+  }
+
+  getActivePartyNum(): firebase.database.Reference {
+    return this.activePartyNum;
+  }
+
+  setActivePartyNum(active: number): void {
+    firebase.database().ref().update({active});
   }
 
   getNumParties(): number {

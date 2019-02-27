@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Alert, AlertController, App } from 'ionic-angular';
 import { ProfileProvider } from "../../providers/profile/profile";
+import { PartyProvider } from "../../providers/party/party";
 import { Events } from 'ionic-angular';
 import firebase from 'firebase/app';
 
@@ -16,15 +17,21 @@ export class HomePage {
   public loadedProfList:Array<any>;
   public profRef:firebase.database.Reference;
   public consent: boolean;
+  public activePartyNum: number;
+  private once: boolean = true;
 
   constructor(
     public navCtrl: NavController,
     public profileProvider: ProfileProvider,
+    public partyProvider: PartyProvider,
     public alertCtrl: AlertController,
     public events: Events,
     public app: App
   ) {
-    this.profRef = firebase.database().ref('/userProfile/');
+    this.partyProvider.getActivePartyNum().on("value", snap => {
+      this.activePartyNum = snap.val();
+    });
+    this.profRef = firebase.database().ref('/parties/' + this.activePartyNum + '/userProfile/');
 
     this.profRef.on('value', profList => {
       let profs = [];
@@ -48,9 +55,17 @@ export class HomePage {
     events.subscribe('star-rating:changed', (starRating) => {
       this.enteredRating = starRating;
     });
+
+    this.profileProvider.loaded.subscribe((value) => {
+       if (value && this.once) {
+           this.initStuff();
+           this.once = false;
+       }
+    });
+
   }
 
-  ionViewDidLoad() {
+  initStuff() {
     if (this.isAdmin()) {
       return;
     }
@@ -58,7 +73,7 @@ export class HomePage {
     this.profileProvider.getAllProfiles().on("value", profListSnapshot => {
     this.profList = [];
     profListSnapshot.forEach(snap => {
-      if(snap.val().role != "admin") {
+      if(snap.val().role != true) {
         this.profList.push({
           id: snap.key,
           first: snap.val().first,
@@ -81,7 +96,7 @@ export class HomePage {
 
   saveRating(id: string, profRating: number, num: number): void {
     if (id != (this.profileProvider.getCurrentUser())) {
-      firebase.database().ref(`/userProfile/` + id).update({rating: ((profRating + this.enteredRating)/ 2)});
+      firebase.database().ref('/parties/'+ this.activePartyNum +`/userProfile/` + id).update({rating: ((profRating + this.enteredRating)/ 2)});
       this.profileProvider.getUserRatings(num-1).set(1);
     }
   }
@@ -121,14 +136,16 @@ export class HomePage {
 
     roleRef.once('value').then((snapshot) => {
       admin = snapshot.val();
-    });
+      console.log(admin);
 
-    if (admin = "admin") {
-      this.app.getRootNav().setRoot('AdminPage');
-      return true;
-    } else {
-      return false;
-    }
+      if (admin == true) {
+        this.app.getRootNav().setRoot('AdminPage');
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return false;
   }
 
   isSelfString(id: string, num: number): string {

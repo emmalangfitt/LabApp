@@ -15,7 +15,11 @@ import { environment } from './environment';
 export class MyApp {
   public rootPage: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen
+  ) {
     firebase.initializeApp(environment);
     firebase.database().ref(`/parties/`);
     platform.ready().then(() => {

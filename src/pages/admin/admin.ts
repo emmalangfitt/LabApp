@@ -56,6 +56,7 @@ export class AdminPage {
         firebase.database().ref(`/parties/${i}/active`).set(true);
       }
     }
+    this.partyProvider.setActivePartyNum(num);
   }
 
   fillType(active: boolean): string {

@@ -3,6 +3,7 @@ import firebase, { User } from 'firebase/app';
 import 'firebase/database';
 import { AuthProvider } from '../auth/auth';
 import { AuthCredential } from 'firebase/auth';
+import { BehaviorSubject } from "rxjs/Rx";
 
 @Injectable()
 export class ProfileProvider {
@@ -18,21 +19,28 @@ export class ProfileProvider {
   public photoRef: firebase.database.Reference;
   public preSurveySubmitted: boolean = false;
   public postSurveySubmitted: boolean = false;
+  public loaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public activePartyNum: number;
 
-  constructor() {
-    firebase.auth().onAuthStateChanged( user => {
-      if(user){
-        this.currentUser = user;
-        this.userProfile = firebase.database().ref(`/userProfile/${user.uid}`);
-        this.preSurvey = firebase.database().ref(`/userProfile/${user.uid}/preSurvey/`);
-        this.postSurvey = firebase.database().ref(`/userProfile/${user.uid}/postSurvey/`);
-        this.interactedWith = firebase.database().ref(`/userProfile/${user.uid}/postSurvey/checkedProfList`);
-        this.profListRef = firebase.database().ref(`/userProfile/`);
-        this.numRef = firebase.database().ref(`/userProfile/${user.uid}/num`);
-        this.ratingsRef = firebase.database().ref(`/userProfile/${user.uid}/ratings/`);
-        this.photoRef = firebase.database().ref(`/userProfile/${user.uid}/photo`);
-        this.roleRef = firebase.database().ref(`/userProfile/${user.uid}/role`);
-      }
+  constructor () {
+    firebase.database().ref(`/active`).on("value", snap => {
+        var num = snap.val();
+
+        firebase.auth().onAuthStateChanged( user => {
+          if(user){
+            this.currentUser = user;
+            this.userProfile = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}`);
+            this.preSurvey = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/preSurvey/`);
+            this.postSurvey = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/postSurvey/`);
+            this.interactedWith = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/postSurvey/checkedProfList`);
+            this.profListRef = firebase.database().ref(`/parties/`+ num + `/userProfile/`);
+            this.numRef = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/num`);
+            this.ratingsRef = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/ratings/`);
+            this.photoRef = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/photo`);
+            this.roleRef = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/role`);
+            this.loaded.next(true);
+          }
+        });
     });
   }
 
@@ -53,7 +61,7 @@ export class ProfileProvider {
   }
 
   getUserRatings(num: number): firebase.database.Reference {
-    return firebase.database().ref('/userProfile/' + this.getCurrentUser() + '/ratings/' + num);
+    return firebase.database().ref('/parties/'+ this.activePartyNum + '/userProfile/' + this.getCurrentUser() + '/ratings/' + num);
   }
 
   getUserPhoto(): firebase.database.Reference {

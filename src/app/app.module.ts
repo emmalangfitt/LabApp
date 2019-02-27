@@ -10,11 +10,12 @@ import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { PartyProvider } from '../providers/party/party';
 import { AuthProvider } from '../providers/auth/auth';
 import { ProfileProvider } from '../providers/profile/profile';
 import { Ionic3StarRatingComponent } from '../components/ionic3-star-rating/ionic3-star-rating';
 import { Camera } from '@ionic-native/camera/ngx';
-import { PartyProvider } from '../providers/party/party';
+
 
 @NgModule({
   declarations: [
@@ -42,9 +43,9 @@ import { PartyProvider } from '../providers/party/party';
     SplashScreen,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    PartyProvider,
     AuthProvider,
-    ProfileProvider,
-    PartyProvider
+    ProfileProvider
   ]
 })
 export class AppModule {}
