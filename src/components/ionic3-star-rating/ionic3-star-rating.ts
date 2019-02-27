@@ -65,7 +65,7 @@ export class Ionic3StarRatingComponent {
   setStar(rating: number, index: number): string {
     if (((rating-index) >= .3) && ((rating-index) <= .7)) {
       return "ios-star-half";
-    } else if ((rating-index) > .8) {
+    } else if ((rating-index) > .7) {
       return "ios-star";
     } else {
       return "ios-star-outline";

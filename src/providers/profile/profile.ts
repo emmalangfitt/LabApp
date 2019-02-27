@@ -25,6 +25,7 @@ export class ProfileProvider {
   constructor () {
     firebase.database().ref(`/active`).on("value", snap => {
         var num = snap.val();
+        this.activePartyNum = num;
 
         firebase.auth().onAuthStateChanged( user => {
           if(user){

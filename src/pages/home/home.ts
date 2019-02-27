@@ -74,13 +74,19 @@ export class HomePage {
     this.profList = [];
     profListSnapshot.forEach(snap => {
       if(snap.val().role != true) {
+        var isSelf = false;
+        if(snap.key == this.profileProvider.getCurrentUser()) {
+          isSelf = true;
+        }
         this.profList.push({
           id: snap.key,
           first: snap.val().first,
           last: snap.val().last,
           rating: snap.val().rating,
           num: snap.val().num,
-          photo: snap.val().photo
+          photo: snap.val().photo,
+          role: snap.val().role,
+          self: isSelf
         });
       }
         return false;
@@ -115,21 +121,6 @@ export class HomePage {
     }
   }
 
-  isSelf(id: string, num: number): boolean {
-    var ratingsRef = this.profileProvider.getUserRatings(num-1);
-    var bool;
-    ratingsRef.on('value', function(snapshot) {
-      bool = snapshot.val();
-    });
-
-    if ((id != (this.profileProvider.getCurrentUser())) &&
-    ( bool == 0 ) ) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   isAdmin(): boolean {
     var roleRef = this.profileProvider.getUserRole();
     var admin;
@@ -148,18 +139,31 @@ export class HomePage {
     return false;
   }
 
-  isSelfString(id: string, num: number): string {
+  isSelfString(num: number, isSelf: boolean, ): string {
     var ratingsRef = this.profileProvider.getUserRatings(num-1);
     var bool;
     ratingsRef.on('value', function(snapshot) {
       bool = snapshot.val();
     });
 
-    if ((id != (this.profileProvider.getCurrentUser())) &&
-    ( bool == 0 ) ) {
-      return "false";
-    } else {
+    if (isSelf || bool == 1) {
       return "true";
+    } else {
+      return "false";
+    }
+  }
+
+  isSelf(num: number, isSelf: boolean): boolean {
+    var ratingsRef = this.profileProvider.getUserRatings(num-1);
+    var bool;
+    ratingsRef.on('value', function(snapshot) {
+      bool = snapshot.val();
+    });
+
+    if (isSelf || bool == 1) {
+      return true;
+    } else {
+      return false;
     }
   }
 
