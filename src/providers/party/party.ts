@@ -20,6 +20,15 @@ export class PartyProvider {
     return this.activePartyNum;
   }
 
+  getActiveParty(): firebase.database.Reference {
+    var num;
+    var enabled;
+    this.activePartyNum.on("value", snap => {
+      num = snap.val();
+    });
+    return firebase.database().ref(`/parties/` + num + `/noratings`);
+  }
+
   setActivePartyNum(active: number): void {
     firebase.database().ref().update({active});
   }
@@ -45,6 +54,7 @@ export class PartyProvider {
       firebase.database().ref(`/parties/${numParties+1}/variedstart`).set(false);
       firebase.database().ref(`/parties/${numParties+1}/weightedrankings`).set(false);
       firebase.database().ref(`/parties/${numParties+1}/active`).set(false);
+      firebase.database().ref(`/parties/${numParties+1}/userProfile/V2lgT8NhxhMNfok6y9GOePCTDFy1/role`).set(true);
 
       data.forEach(function (value) {
         firebase.database().ref(`/parties/${numParties+1}/${value}`).set(true);

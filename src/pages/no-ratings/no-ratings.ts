@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {
   Alert,
   AlertController,
-  NavController,
   App
 } from "ionic-angular";
 import { ProfileProvider } from "../../providers/profile/profile";
@@ -14,12 +14,20 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/storage';
 
+/**
+ * Generated class for the NoRatingsPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
 @Component({
-  selector: "page-about",
-  templateUrl: "about.html"
+  selector: 'page-no-ratings',
+  templateUrl: 'no-ratings.html',
 })
 
-export class AboutPage {
+export class NoRatingsPage {
   public userProfile: any;
   public rating: number;
   public currentImage: any;
@@ -49,7 +57,6 @@ export class AboutPage {
   initStuff() {
     this.profileProvider.getUserProfile().on("value", userProfileSnapshot => {
       this.userProfile = userProfileSnapshot.val();
-      this.rating = userProfileSnapshot.val().rating;
       this.num = userProfileSnapshot.val().num;
       this.photo = userProfileSnapshot.val().photo;
     });

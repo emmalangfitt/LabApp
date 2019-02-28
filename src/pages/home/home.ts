@@ -28,35 +28,44 @@ export class HomePage {
     public events: Events,
     public app: App
   ) {
-    this.partyProvider.getActivePartyNum().on("value", snap => {
-      this.activePartyNum = snap.val();
-    });
-    this.profRef = firebase.database().ref('/parties/' + this.activePartyNum + '/userProfile/');
-
-    this.profRef.on('value', profList => {
-      let profs = [];
-      profList.forEach(prof => {
-        profs.push({
-          id: prof.key,
-          first: prof.val().first,
-          last: prof.val().last,
-          rating: prof.val().rating,
-          num: prof.val().num,
-          photo: prof.val().photo,
-          role: prof.val().role
-        });
-        return false;
-      });
-
-      this.profList = profs;
-      this.loadedProfList = profs;
-    });
-
     events.subscribe('star-rating:changed', (starRating) => {
       this.enteredRating = starRating;
     });
 
     this.profileProvider.loaded.subscribe((value) => {
+      this.partyProvider.getActivePartyNum().on("value", snap => {
+        this.activePartyNum = snap.val();
+      });
+
+      this.profRef = firebase.database().ref('/parties/' + this.activePartyNum + '/userProfile/');
+
+      this.profRef.on('value', profList => {
+        let profs = [];
+        profList.forEach(prof => {
+          if(prof.val().role != true) {
+            var isSelf = false;
+            if(prof.key == this.profileProvider.getCurrentUser()) {
+              isSelf = true;
+            }
+
+            profs.push({
+              id: prof.key,
+              first: prof.val().first,
+              last: prof.val().last,
+              rating: prof.val().rating,
+              num: prof.val().num,
+              photo: prof.val().photo,
+              role: prof.val().role,
+              self: isSelf
+            });
+          }
+          return false;
+        });
+
+        this.profList = profs;
+        this.loadedProfList = profs;
+      });
+
        if (value && this.once) {
            this.initStuff();
            this.once = false;
@@ -69,6 +78,13 @@ export class HomePage {
     if (this.isAdmin()) {
       return;
     }
+
+    this.partyProvider.getActiveParty().on("value", snap => {
+      if(snap.val()) {
+        this.app.getRootNav().setRoot('NoRatingsPage');
+      }
+    });
+
 
     this.profileProvider.getAllProfiles().on("value", profListSnapshot => {
     this.profList = [];
@@ -127,7 +143,6 @@ export class HomePage {
 
     roleRef.once('value').then((snapshot) => {
       admin = snapshot.val();
-      console.log(admin);
 
       if (admin == true) {
         this.app.getRootNav().setRoot('AdminPage');

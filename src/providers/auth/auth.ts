@@ -58,13 +58,14 @@ export class AuthProvider {
           .ref(`/parties/`+ this.activePartyNum +`/userProfile/${newUserCredential.user.uid}/postSurvey/`);
 
         var numUsers = 0;
-        firebase.database().ref(`/parties/`+ this.activePartyNum +`userProfile/`).once("value", function(snapshot) {
+        var activePartyNum = this.activePartyNum;
+        firebase.database().ref(`/parties/`+ this.activePartyNum +`/userProfile/`).once("value", function(snapshot) {
           numUsers = snapshot.numChildren();
+          firebase
+            .database()
+            .ref(`/parties/`+ activePartyNum +`/userProfile/${newUserCredential.user.uid}/num`)
+            .set(numUsers);
         });
-        firebase
-          .database()
-          .ref(`/parties/`+ this.activePartyNum +`/userProfile/${newUserCredential.user.uid}/num`)
-          .set(numUsers);
 
         this.listOfRatings = new Array();
         for (var i = 0; i < 30; i++) {
