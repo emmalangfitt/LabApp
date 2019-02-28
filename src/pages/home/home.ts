@@ -117,10 +117,44 @@ export class HomePage {
   }
 
   saveRating(id: string, profRating: number, num: number): void {
-    if (id != (this.profileProvider.getCurrentUser())) {
-      firebase.database().ref('/parties/'+ this.activePartyNum +`/userProfile/` + id).update({rating: ((profRating + this.enteredRating)/ 2)});
-      this.profileProvider.getUserRatings(num-1).set(1);
-    }
+    var weighted;
+    this.partyProvider.getWeighted().on("value", snap => {
+      weighted = snap.val();
+      var rating;
+      this.profileProvider.getRating().on("value", snap => {
+        rating = Math.trunc(snap.val());
+      });
+
+      var old;
+      var add;
+
+      if (rating == 1) {
+        old = .8;
+        add = .2;
+      } else if (rating == 2) {
+        old = .65;
+        add = .35;
+      } else if (rating == 3) {
+        old = .5;
+        add = .5;
+      } else if (rating == 4) {
+        old = .35;
+        add = .65;
+      } else if (rating == 5) {
+        old = .2;
+        add = .8;
+      }
+
+      if (weighted){
+        firebase.database().ref('/parties/'+ this.activePartyNum +`/userProfile/` + id)
+        .update({rating: ((profRating*old) + (this.enteredRating*add))});
+        this.profileProvider.getUserRatings(num-1).set(1);
+      } else {
+        firebase.database().ref('/parties/'+ this.activePartyNum +`/userProfile/` + id)
+        .update({rating: ((profRating + this.enteredRating)/ 2)});
+        this.profileProvider.getUserRatings(num-1).set(1);
+      }
+    });
   }
 
   resetRating(): void {

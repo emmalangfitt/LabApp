@@ -29,6 +29,24 @@ export class PartyProvider {
     return firebase.database().ref(`/parties/` + num + `/noratings`);
   }
 
+  getWeighted(): firebase.database.Reference {
+    var num;
+    var enabled;
+    this.activePartyNum.on("value", snap => {
+      num = snap.val();
+    });
+    return firebase.database().ref(`/parties/` + num + `/weightedrankings`);
+  }
+
+  getVaried(): firebase.database.Reference {
+    var num;
+    var enabled;
+    this.activePartyNum.on("value", snap => {
+      num = snap.val();
+    });
+    return firebase.database().ref(`/parties/` + num + `/variedstart`);
+  }
+
   setActivePartyNum(active: number): void {
     firebase.database().ref().update({active});
   }

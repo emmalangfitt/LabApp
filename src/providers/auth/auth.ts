@@ -40,10 +40,6 @@ export class AuthProvider {
           .set(last);
         firebase
           .database()
-          .ref(`/parties/`+ this.activePartyNum +`/userProfile/${newUserCredential.user.uid}/rating`)
-          .set(2.5);
-        firebase
-          .database()
           .ref(`/parties/`+ this.activePartyNum +`/userProfile/${newUserCredential.user.uid}/role`)
           .set(false);
         firebase
@@ -66,6 +62,37 @@ export class AuthProvider {
             .ref(`/parties/`+ activePartyNum +`/userProfile/${newUserCredential.user.uid}/num`)
             .set(numUsers);
         });
+
+        var varied;
+        this.partyProvider.getVaried().on("value", snap => {
+          varied = snap.val();
+
+          if (varied) {
+            var rate;
+            if (numUsers <= 6) {
+              rate = 1;
+            } else if (numUsers > 6 && numUsers <= 12) {
+              rate = 2;
+            } else if (numUsers > 12 && numUsers <= 18) {
+              rate = 3;
+            } else if (numUsers > 18 && numUsers <= 24) {
+              rate = 4;
+            } else {
+              rate = 5;
+            }
+            firebase
+              .database()
+              .ref(`/parties/`+ this.activePartyNum +`/userProfile/${newUserCredential.user.uid}/rating`)
+              .set(rate);
+          } else {
+            firebase
+              .database()
+              .ref(`/parties/`+ this.activePartyNum +`/userProfile/${newUserCredential.user.uid}/rating`)
+              .set(2.5);
+          }
+
+        });
+
 
         this.listOfRatings = new Array();
         for (var i = 0; i < 30; i++) {

@@ -17,6 +17,7 @@ export class ProfileProvider {
   public numRef: firebase.database.Reference;
   public ratingsRef: firebase.database.Reference;
   public photoRef: firebase.database.Reference;
+  public ownRating: firebase.database.Reference;
   public preSurveySubmitted: boolean = false;
   public postSurveySubmitted: boolean = false;
   public loaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -39,6 +40,7 @@ export class ProfileProvider {
             this.ratingsRef = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/ratings/`);
             this.photoRef = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/photo`);
             this.roleRef = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/role`);
+            this.ownRating = firebase.database().ref(`/parties/`+ num + `/userProfile/${user.uid}/rating`);
             this.loaded.next(true);
           }
         });
@@ -79,6 +81,10 @@ export class ProfileProvider {
 
   updateRating(rating: number): Promise<any> {
     return this.userProfile.update({rating});
+  }
+
+  getRating() {
+    return this.ownRating;
   }
 
   setConsent(consent: boolean): Promise<any> {
