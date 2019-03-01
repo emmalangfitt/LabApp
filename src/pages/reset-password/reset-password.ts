@@ -15,7 +15,7 @@ import { EmailValidator } from "../../validators/email";
   templateUrl: "reset-password.html"
 })
 export class ResetPasswordPage {
-  public resetPasswordForm: FormGroup;
+  public resetPasswordForm: FormGroup; // form of email collection for password reset
 
   constructor(
     public navCtrl: NavController,
@@ -31,6 +31,9 @@ export class ResetPasswordPage {
     });
   }
 
+  /*
+    collects info to reset password and saves new value in firebase
+  */
   resetPassword(): void {
     if (!this.resetPasswordForm.valid) {
       console.log(

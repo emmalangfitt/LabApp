@@ -1,3 +1,12 @@
+<!---------------------------------------
+Post Survey Page
+  - first page of questions for the post-survey
+  - includes asking which users' were interacted with for use
+    on next page
+  - saves answers to firebase under "q1, q2, q3..."
+  - multiple question types including scale, multiple choice,
+    checkboxes, etc.
+---------------------------------------->
 <ion-header>
   <ion-navbar>
     <ion-title>Post-Survey</ion-title>
@@ -8,11 +17,12 @@
 <ion-content padding text-center>
   <form [formGroup]="postSurveyForm" (submit)="submit()" novalidate>
 
+    <!-- radio selection question -->
     <h5>Selection question goes here?</h5>
     <ion-list radio-group formControlName="option">
       <ion-item>
         <ion-label>option one</ion-label>
-        <ion-radio slot="start" value="biff" checked></ion-radio>
+        <ion-radio slot="start" value="biff" checked></ion-radio>2
       </ion-item>
 
       <ion-item>
@@ -26,17 +36,20 @@
       </ion-item>
     </ion-list>
 
+    <!-- scale rating question -->
     <h5>Rating question goes here?</h5>
     <ion-range min="0" max="7" [(ngModel)]="saturation" color="primary" snaps="true" formControlName="rating">
         <ion-label range-left>0</ion-label>
         <ion-label range-right>7</ion-label>
     </ion-range>
 
+    <!-- short answer question -->
     <h5>Short answer question goes here?</h5>
     <ion-item>
       <ion-textarea formControlName="shortAnswer" placeholder="Enter your answer here"></ion-textarea>
     </ion-item>
 
+    <!-- rank multiple options question -->
     <h5>Rank your interaction from blank to blank</h5>
     <ion-list reorder="true" (ionItemReorder)="reorderItem($event)">
         <ion-item *ngFor="let prof of rankedProfList">
@@ -49,6 +62,7 @@
         </ion-item>
     </ion-list>
 
+    <!-- checkbox question -->
     <h5>Check who you knew previously</h5>
     <ion-list>
       <ion-item *ngFor="let prof of allProfList">

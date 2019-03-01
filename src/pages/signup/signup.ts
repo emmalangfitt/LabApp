@@ -19,8 +19,8 @@ import { TabsPage } from "../tabs/tabs";
   templateUrl: "signup.html"
 })
 export class SignupPage {
-  public signupForm: FormGroup;
-  public loading: Loading;
+  public signupForm: FormGroup; // collects input of email, password, and name
+  public loading: Loading; // displays loading icon while info saves
 
   constructor(
     public navCtrl: NavController,
@@ -36,6 +36,10 @@ export class SignupPage {
       });
     }
 
+  /*
+    collects info to create a new user account and save their info
+    to the firebase database in the current active party
+  */
   signupUser(): void {
     if (!this.signupForm.valid) {
       console.log(

@@ -27,6 +27,8 @@ export class MyApp {
       splashScreen.hide();
     });
 
+    // If the user is logged in, show them the tab page
+    // Else, show the login/signup page
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (!user) {
         this.rootPage = LoginPage;

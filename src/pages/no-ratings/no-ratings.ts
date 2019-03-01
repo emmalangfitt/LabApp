@@ -14,13 +14,6 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/storage';
 
-/**
- * Generated class for the NoRatingsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-no-ratings',
@@ -28,14 +21,12 @@ import 'firebase/storage';
 })
 
 export class NoRatingsPage {
-  public userProfile: any;
-  public rating: number;
-  public currentImage: any;
-  public num: number;
-  public captureDataUrl: string;
-  public photo: string;
-  public submitted: boolean = false;
-  public once: boolean = true;
+  public userProfile: any; // firebase ref of self
+  public rating: number; // user's own rating
+  public num: number; // user's number
+  public captureDataUrl: string; // reads image data before saving
+  public photo: string; // stores user's photo data
+  public once: boolean = true; // makes sure to only load user data on load
 
   constructor(
     public navCtrl: NavController,
@@ -46,6 +37,7 @@ export class NoRatingsPage {
     private camera: Camera,
     public app: App
   ) {
+    // once profile provider has loaded data, run page's data initialization
     this.profileProvider.loaded.subscribe((value) => {
       if (value && this.once) {
           this.initStuff();
@@ -54,6 +46,11 @@ export class NoRatingsPage {
     });
   }
 
+  /*
+    Function to initialize user's data. Also restricts user to
+    only access the admin page if the user is logged into the
+    admin account
+  */
   initStuff() {
     this.profileProvider.getUserProfile().on("value", userProfileSnapshot => {
       this.userProfile = userProfileSnapshot.val();
@@ -73,12 +70,19 @@ export class NoRatingsPage {
     });
   }
 
+  /*
+    Logs user out and pushes them to the login page
+  */
   logOut(): void {
     this.authProvider.logoutUser().then(() => {
       this.navCtrl.setRoot(LoginPage);
     });
   }
 
+  /*
+    Allows user to update their email value and save the new
+    input to firebase through an alert
+  */
   updateEmail(): void {
     let alert: Alert = this.alertCtrl.create({
       inputs: [{ name: 'newEmail', placeholder: 'Your new email' },
@@ -96,6 +100,10 @@ export class NoRatingsPage {
     alert.present();
   }
 
+  /*
+    Allows user to update their password value and save the new
+    input to firebase through an alert
+  */
   updatePassword(): void {
     let alert: Alert = this.alertCtrl.create({
       inputs: [
@@ -116,6 +124,10 @@ export class NoRatingsPage {
     alert.present();
   }
 
+  /*
+    Allows user to update their first and last name values
+    and save the new input to firebase through an alert
+  */
   updateName(): void {
     const alert: Alert = this.alertCtrl.create({
       message: "Your first name & last name",
@@ -144,24 +156,34 @@ export class NoRatingsPage {
     alert.present();
   }
 
+  /*
+    adds pre-survey to navigation on button press
+  */
   goToPreSurvey():void {
     this.navCtrl.push('PreSurveyPage');
   }
 
+  /*
+    adds post-survey to navigation on button press
+  */
   goToPostSurvey():void {
     this.navCtrl.push('PostSurveyPage');
   }
 
+  /*
+    uses user's phone camera to allow them to take a picture,
+    save it to firebase, and store it for future display
+  */
   takePicture() {
     const options: CameraOptions = {
       quality : 50,
       destinationType : this.camera.DestinationType.DATA_URL,
       sourceType : this.camera.PictureSourceType.CAMERA,
       encodingType : this.camera.EncodingType.JPEG,
-      targetHeight : 500,
-      targetWidth : 500,
+      targetHeight : 500, // square photo
+      targetWidth : 500, // square photo
       allowEdit : true,
-      cameraDirection: 1
+      cameraDirection: 1 // 1 for front-facing, 0 for back-facing
     }
 
     this.camera.getPicture(options).then((imageData) => {
@@ -173,13 +195,12 @@ export class NoRatingsPage {
       const imageRef = storageRef.child(`images/${filename}.jpg`);
 
       imageRef.putString(captureDataUrl, firebase.storage.StringFormat.DATA_URL).then((snapshot)=> {
-        // Do something here when the data is succesfully uploaded!
+        // Set users photo to picture just taken
         this.profileProvider.getUserPhoto().set(captureDataUrl);
       });
     }, (err) => {
-      // Handle error
+      console.log("Photo capture failed.")
     });
-
   }
 
 }

@@ -1,3 +1,13 @@
+<!---------------------------------------
+Home Page
+  - shows list of registered users in the active party, including
+    their photo and current ranking
+  - allows user to rate other users (not themselves) once every
+    five-minute increment
+  - to rate, the user must click their rating of another user and then
+    hit the "save" button
+  - includes a search bar to find users by name
+---------------------------------------->
 <ion-header>
   <ion-navbar>
     <ion-title>Rate</ion-title>
@@ -20,11 +30,11 @@
                   halfIcon = "ios-half-star"
                   activeColor = "#488aff"
                   defaultColor = "#f4f4f4"
-                  [readonly]= "isSelfString(prof?.num, prof?.self)"
+                  [readonly]= "canRateString(prof?.num, prof?.self)"
                   [rating]=prof?.rating>
             </ionic3-star-rating>
             <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
-            <button ion-button [disabled]="isSelf(prof?.num, prof?.self)" (click)="saveRating(prof?.id, prof?.rating, prof?.num)">Save</button>
+            <button ion-button [disabled]="canRate(prof?.num, prof?.self)" (click)="saveRating(prof?.id, prof?.rating, prof?.num)">Save</button>
           </ion-card-content>
         </ion-card>
       </ion-col>

@@ -1,3 +1,11 @@
+<!---------------------------------------
+Pre Survey  Page
+  - page of questions for the pre-survey
+  - includes collection of user's demograpic information
+  - saves answers to firebase under "q1, q2, q3..."
+  - multiple question types including scale, multiple choice,
+    checkboxes, etc.
+---------------------------------------->
 <ion-header>
   <ion-navbar>
     <ion-title>Pre-Survey</ion-title>
@@ -7,6 +15,8 @@
 
 <ion-content padding text-center>
   <form [formGroup]="preSurveyForm" (submit)="submit()" novalidate>
+
+    <!-- date selection question -->
     <ion-item>
       <ion-label color="dark">Graduation Year</ion-label>
       <ion-datetime
@@ -19,6 +29,7 @@
       </ion-datetime>
     </ion-item>
 
+    <!-- item selection question -->
     <ion-item>
       <ion-label color="dark">Gender</ion-label>
       <ion-select placeholder="Select One" formControlName="gender">
@@ -28,6 +39,7 @@
       </ion-select>
     </ion-item>
 
+    <!-- item selection question -->
     <ion-item>
       <ion-label color="dark">Major</ion-label>
       <ion-select placeholder="Select Best Match" formControlName="major">
@@ -39,6 +51,7 @@
       </ion-select>
     </ion-item>
 
+    <!-- radio selection question -->
     <h5>Selection question goes here?</h5>
     <ion-list radio-group formControlName="option">
       <ion-item>
@@ -57,12 +70,14 @@
       </ion-item>
     </ion-list>
 
+    <!-- rating scale question -->
     <h5>Rating question goes here?</h5>
     <ion-range min="0" max="7" [(ngModel)]="saturation" color="primary" snaps="true" formControlName="rating">
         <ion-label range-left>0</ion-label>
         <ion-label range-right>7</ion-label>
     </ion-range>
 
+    <!-- short answer question -->
     <h5>Short answer question goes here?</h5>
     <ion-item>
       <ion-textarea formControlName="shortAnswer" placeholder="Enter your answer here"></ion-textarea>

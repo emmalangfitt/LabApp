@@ -4,23 +4,16 @@ import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from "@ang
 import { ProfileProvider } from "../../providers/profile/profile";
 import firebase from 'firebase/app';
 
-/**
- * Generated class for the PreSurveyPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-post-survey',
   templateUrl: 'post-survey.html',
 })
 export class PostSurveyPage {
-  public postSurveyForm: FormGroup;
-  public allProfList: Array<any>;
-  public rankedProfList: Array<any>;
-  public profRef:firebase.database.Reference;
+  public postSurveyForm: FormGroup; // form of questions
+  public allProfList: Array<any>; // all users in active party
+  public rankedProfList: Array<any>; // ranked version of allProfList
+  public profRef:firebase.database.Reference; // reference to all user profiles
 
   constructor(
     public navCtrl: NavController,
@@ -33,29 +26,36 @@ export class PostSurveyPage {
         shortAnswer: new FormControl('')
       });
 
-      this.profRef = firebase.database().ref('/userProfile/');
-
-      this.profRef.on('value', profList => {
-        let profs = [];
-        profList.forEach(prof => {
-          profs.push({
-            photo: prof.val().photo,
-            first: prof.val().first,
-            last: prof.val().last,
-            isChecked: false
-          });
-          return false;
+      // load lists once profile provider is initialized
+      this.profileProvider.loaded.subscribe((value) => {
+        this.partyProvider.getActivePartyNum().on("value", snap => {
+          this.activePartyNum = snap.val();
         });
 
-        this.allProfList = profs.slice();
-        this.rankedProfList = profs.slice();
+        this.profRef = firebase.database().ref('/parties/' + this.activePartyNum + '/userProfile/');
+
+
+        this.profRef.on('value', profList => {
+          let profs = [];
+          profList.forEach(prof => {
+            profs.push({
+              photo: prof.val().photo,
+              first: prof.val().first,
+              last: prof.val().last,
+              isChecked: false
+            });
+            return false;
+          });
+
+          this.allProfList = profs.slice();
+          this.rankedProfList = profs.slice();
+        });
       });
     }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PreSurveyPage');
-  }
-
+  /*
+    save answers to firebase and push to next page
+  */
   submit(): void {
     const option: string = this.postSurveyForm.value.option;
     const rating: number = this.postSurveyForm.value.rating;
@@ -72,6 +72,9 @@ export class PostSurveyPage {
     this.navCtrl.push('PostSurvey_2Page');
   }
 
+  /*
+    used to rank user interactions, re-saves array in new order
+  */
   reorderItem(indexes) {
     this.rankedProfList = reorderArray(this.rankedProfList, indexes);
   }

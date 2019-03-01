@@ -12,11 +12,11 @@ import firebase from 'firebase/app';
 })
 export class PostSurvey_2Page {
 
-  public postSurveyForm: FormGroup;
-  public allProfList: Array<any>;
-  public interactedProfList: Array<any>;
-  public profRef:firebase.database.Reference;
-  public interactedProfRef:firebase.database.Reference;
+  public postSurveyForm: FormGroup; // form of questions
+  public allProfList: Array<any>; // all users in active party
+  public interactedProfList: Array<any>; // only users that were interacted with
+  public profRef:firebase.database.Reference; // reference to all user profiles
+  public interactedProfRef:firebase.database.Reference; // reference to interacted user profiles
 
   constructor(
     public navCtrl: NavController,
@@ -26,49 +26,58 @@ export class PostSurvey_2Page {
       this.postSurveyForm = formBuilder.group({
       });
 
-      this.profRef = firebase.database().ref('/userProfile/');
-      this.interactedProfRef = this.profileProvider.interactedWith;
-
-      this.profRef.on('value', profList => {
-        let profs = [];
-        profList.forEach(prof => {
-          profs.push({
-            photo: prof.val().photo,
-            first: prof.val().first,
-            last: prof.val().last,
-            isChecked: false
-          });
-          return false;
+      // load lists once profile provider is initialized
+      this.profileProvider.loaded.subscribe((value) => {
+        this.partyProvider.getActivePartyNum().on("value", snap => {
+          this.activePartyNum = snap.val();
         });
 
-        this.allProfList = profs.slice();
-      });
+        this.profRef = firebase.database().ref('/parties/' + this.activePartyNum + '/userProfile/');
+        this.interactedProfRef = this.profileProvider.interactedWith;
 
-      this.interactedProfRef.on('value', profList => {
-        let profs = [];
-        profList.forEach(prof => {
-          profs.push({
-            photo: prof.val().photo,
-            first: prof.val().first,
-            last: prof.val().last
+        this.profRef.on('value', profList => {
+          let profs = [];
+          profList.forEach(prof => {
+            profs.push({
+              photo: prof.val().photo,
+              first: prof.val().first,
+              last: prof.val().last,
+              isChecked: false
+            });
+            return false;
           });
-          return false;
+
+          this.allProfList = profs.slice();
         });
 
-        this.interactedProfList = profs.slice();
+        this.interactedProfRef.on('value', profList => {
+          let profs = [];
+          profList.forEach(prof => {
+            profs.push({
+              photo: prof.val().photo,
+              first: prof.val().first,
+              last: prof.val().last
+            });
+            return false;
+          });
+
+          this.interactedProfList = profs.slice();
+        });
       });
     }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PostSurvey_2Page');
-  }
-
+  /*
+    save answers to firebase and push to next page
+  */
   submit(): void {
     this.navCtrl.pop();
     this.navCtrl.pop();
     this.profileProvider.postSurveySubmitted = true;
   }
 
+  /*
+    used to rank user interactions, re-saves array in new order
+  */
   reorderItem(indexes) {
     this.interactedProfList = reorderArray(this.interactedProfList, indexes);
   }

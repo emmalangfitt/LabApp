@@ -3,20 +3,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { ProfileProvider } from "../../providers/profile/profile";
 
-/**
- * Generated class for the PreSurveyPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-pre-survey',
   templateUrl: 'pre-survey.html',
 })
 export class PreSurveyPage {
-  public preSurveyForm: FormGroup;
+  public preSurveyForm: FormGroup; // form of questions
 
   constructor(
     public navCtrl: NavController,
@@ -33,10 +26,9 @@ export class PreSurveyPage {
       });
     }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PreSurveyPage');
-  }
-
+  /*
+    save answers to firebase and push to next page
+  */
   submit(): void {
     const year: string = this.preSurveyForm.value.year;
     const gender: string = this.preSurveyForm.value.gender;

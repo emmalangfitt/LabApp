@@ -12,7 +12,7 @@ import { EmailValidator } from '../../validators/email';
 })
 export class LoginPage {
 
-  public loginForm: FormGroup;
+  public loginForm: FormGroup; // form to gather email and password
   public loading: Loading;
 
   constructor(
@@ -34,18 +34,24 @@ export class LoginPage {
    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
+  /*
+    Navigate to sign up page on button click
+  */
   goToSignup():void {
     this.navCtrl.push('SignupPage');
   }
 
+  /*
+    Navigate to rest password page on button click
+  */
   goToResetPassword():void {
     this.navCtrl.push('ResetPasswordPage');
   }
 
+  /*
+    When "Log In" is clicked, validate that user is registered and
+    log them into the active party. Shows loading indicator while validating.
+  */
   loginUser(): void {
     if (!this.loginForm.valid) {
       console.log(

@@ -11,14 +11,13 @@ import firebase from 'firebase/app';
 })
 
 export class HomePage {
-
-  public profList: Array<any>;
-  public enteredRating: number;
-  public loadedProfList:Array<any>;
-  public profRef:firebase.database.Reference;
-  public consent: boolean;
-  public activePartyNum: number;
-  private once: boolean = true;
+  public profList: Array<any>; // list of all existing users, edited by search bar
+  public enteredRating: number; // rating entered by user
+  public loadedProfList:Array<any>; // list of all existing users, not edited by search bar
+  public profRef:firebase.database.Reference; // reference to all users in active party
+  public consent: boolean; // if current user consents to experiment based on alert response
+  public activePartyNum: number; // number of active party
+  private once: boolean = true; // ensures initialization is only run once
 
   constructor(
     public navCtrl: NavController,
@@ -28,6 +27,7 @@ export class HomePage {
     public events: Events,
     public app: App
   ) {
+    // stores rating entered by user on click
     events.subscribe('star-rating:changed', (starRating) => {
       this.enteredRating = starRating;
     });
@@ -39,6 +39,7 @@ export class HomePage {
 
       this.profRef = firebase.database().ref('/parties/' + this.activePartyNum + '/userProfile/');
 
+      // create and store list of all profs in active party
       this.profRef.on('value', profList => {
         let profs = [];
         profList.forEach(prof => {
@@ -66,6 +67,7 @@ export class HomePage {
         this.loadedProfList = profs;
       });
 
+      // only run initialization once the profile provider is loaded
        if (value && this.once) {
            this.initStuff();
            this.once = false;
@@ -74,6 +76,11 @@ export class HomePage {
 
   }
 
+  /*
+    Function to initialize page's data. Also restricts user to
+    only access the about page if the party is set to the no-rating
+    condition.
+  */
   initStuff() {
     if (this.isAdmin()) {
       return;
@@ -85,7 +92,7 @@ export class HomePage {
       }
     });
 
-
+    // sets the profile list to a list of all users in active party
     this.profileProvider.getAllProfiles().on("value", profListSnapshot => {
     this.profList = [];
     profListSnapshot.forEach(snap => {
@@ -109,6 +116,7 @@ export class HomePage {
       });
     });
 
+    // reset rating every five minutes (minutes * seconds * milliseconds)
     setInterval(() => {
       this.resetRating();
     }, 5*60*1000);
@@ -116,6 +124,15 @@ export class HomePage {
     this.requestConsent();
   }
 
+  /*
+    Function to update a user's rating based on a new input depending
+    on the value entered and if the ratings are weighted or not.
+    If weighted:
+      new_rating = weightA * old_value + weightB * new_value
+    where {user's rating|weight}...
+      weightA = {1|.8  2|.65  3|.5  4|.35  5|.2}
+      weightB = {1|.2  2|.35  3|.5  4|.65  5|.8}
+  */
   saveRating(id: string, profRating: number, num: number): void {
     var weighted;
     this.partyProvider.getWeighted().on("value", snap => {
@@ -125,9 +142,10 @@ export class HomePage {
         rating = Math.trunc(snap.val());
       });
 
-      var old;
-      var add;
+      var old; // initial rating value
+      var add; // new rating to add in
 
+      // set weights based on current user's own rating
       if (rating == 1) {
         old = .8;
         add = .2;
@@ -145,6 +163,7 @@ export class HomePage {
         add = .8;
       }
 
+      // average new rating into old rating and save in database
       if (weighted){
         firebase.database().ref('/parties/'+ this.activePartyNum +`/userProfile/` + id)
         .update({rating: ((profRating*old) + (this.enteredRating*add))});
@@ -157,6 +176,10 @@ export class HomePage {
     });
   }
 
+  /*
+    Resets the array keeping track of who has rated who so the current
+    user can rate other users again. Called every five minutes.
+  */
   resetRating(): void {
     var numRef = this.profileProvider.getUserNum();
     var num;
@@ -165,12 +188,15 @@ export class HomePage {
     });
 
     for (var i = 0; i < 30; i++) {
-      if (i != num-1) {
+      if (i != num-1) { // making sure they cannot rate themselves
         this.profileProvider.getUserRatings(i).set(0);
       }
     }
   }
 
+  /*
+    Returns a boolean indicating if the current user is the admin account
+  */
   isAdmin(): boolean {
     var roleRef = this.profileProvider.getUserRole();
     var admin;
@@ -188,7 +214,12 @@ export class HomePage {
     return false;
   }
 
-  isSelfString(num: number, isSelf: boolean, ): string {
+  /*
+    Returns a string indicating if a user can be rated by the current
+    user. The user cannot rate themselves or people they already rated
+    within the past fives minutes.
+  */
+  canRateString(num: number, isSelf: boolean, ): string {
     var ratingsRef = this.profileProvider.getUserRatings(num-1);
     var bool;
     ratingsRef.on('value', function(snapshot) {
@@ -202,7 +233,12 @@ export class HomePage {
     }
   }
 
-  isSelf(num: number, isSelf: boolean): boolean {
+  /*
+    Returns a boolean indicating if a user can be rated by the current
+    user. The user cannot rate themselves or people they already rated
+    within the past fives minutes.
+  */
+  canRate(num: number, isSelf: boolean): boolean {
     var ratingsRef = this.profileProvider.getUserRatings(num-1);
     var bool;
     ratingsRef.on('value', function(snapshot) {
@@ -216,10 +252,16 @@ export class HomePage {
     }
   }
 
+  /*
+    Initializes the searchbar's prof list to all profs under the active party
+  */
   initializeItems(): void {
     this.profList = this.loadedProfList;
   }
 
+  /*
+    Searchbar's function to find and display profiles by the entered name.
+  */
   getItems(searchbar) {
     // Reset items back to all of the items
     this.initializeItems();
@@ -229,9 +271,12 @@ export class HomePage {
     if (!q) {
       return;
     }
+
+    // filter list based on input, ignoring case
     this.profList = this.profList.filter((v) => {
       if(v.first && q || v.lant && q) {
-        if (v.first.toLowerCase().indexOf(q.toLowerCase()) > -1 || v.last.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+        if (v.first.toLowerCase().indexOf(q.toLowerCase()) > -1
+        || v.last.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
         return false;
@@ -239,12 +284,18 @@ export class HomePage {
     });
   }
 
+  /*
+    Present alert with consent infirmation and save if the user accepts or not
+  */
   public requestConsent(): void {
     this.consentAlert('consent message goes here it will be super long').then(confirm => {
       this.profileProvider.setConsent(confirm);
     })
   }
 
+  /*
+    Create alert with consent infirmation and allow user to accept or not
+  */
   private consentAlert(message: string): Promise<boolean> {
     let resolveFunction: (confirm: boolean) => void;
     let promise = new Promise<boolean>(resolve => {

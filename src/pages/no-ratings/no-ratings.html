@@ -1,3 +1,13 @@
+<!---------------------------------------
+No Ratings Page
+  - Just like the about page but without the ratings tab available
+  - Does not display a rating for the current user
+  - displays user's photo and information
+  - gives users option to update email, password, and name
+  - allows user to take and save profile photo
+  - contains links for pre and post surveys
+  - includes logout button in header
+---------------------------------------->
 <ion-header>
   <ion-navbar>
     <ion-title>Your Profile</ion-title>
@@ -19,6 +29,4 @@
   <button ion-button (click)="takePicture()">Take Photo</button>
   <button ion-button (click)="goToPreSurvey()" [disabled]="this.profileProvider.preSurveySubmitted">Pre-Survey</button>
   <button ion-button (click)="goToPostSurvey()" [disabled]="this.profileProvider.postSurveySubmitted">Post-Survey</button>
-
-
 </ion-content>

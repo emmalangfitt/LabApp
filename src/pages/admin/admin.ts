@@ -5,20 +5,13 @@ import { PartyProvider } from "../../providers/party/party";
 import { LoginPage } from '../login/login';
 import firebase from 'firebase/app';
 
-/**
- * Generated class for the AdminPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-admin',
   templateUrl: 'admin.html',
 })
 export class AdminPage {
-  public partyList: Array<any>;
+  public partyList: Array<any>; // holds list of existing parties
 
   constructor (
     public navCtrl: NavController,
@@ -28,6 +21,10 @@ export class AdminPage {
     public alertCtrl: AlertController
   ) {}
 
+  /*
+    Function to initialize page data, including the list
+    of existing parties
+  */
   ionViewDidLoad() {
     this.partyProvider.getPartyList().on("value", partySnapshot => {
     this.partyList = [];
@@ -41,12 +38,20 @@ export class AdminPage {
     });
   }
 
+  /*
+    Logs user out and pushes them to the login page
+  */
   logOut(): void {
     this.authProvider.logoutUser().then(() => {
       this.navCtrl.setRoot(LoginPage);
-    });
+    });s
   }
 
+  /*
+    makes the clicked-on party the only active party and
+    saves that party num as the "ActivePartyNum" in the
+    party provider
+  */
   makeActive(num: number): void {
     var numParties = this.partyProvider.getNumParties();
     for(var i = 1; i <= numParties; i++) {
@@ -59,6 +64,9 @@ export class AdminPage {
     this.partyProvider.setActivePartyNum(num);
   }
 
+  /*
+    displays active party in a different color
+  */
   fillType(active: boolean): string {
     if (active) {
       return "primary";
@@ -67,6 +75,14 @@ export class AdminPage {
     }
   }
 
+  /*
+    Presents an alert to add a new party, automatically given the
+    next number. Admin can also set the party's conditions, with a
+    checked box meaning that condition is true:
+      - noratings: cannot rate other users
+      - variedstart: users' ratings start as evenly distributed between 1 and 5
+      - weighted rankings: a high-rate user will be weighted more than a low-rated user
+  */
   public addPartyAlert(): void {
 
     let alert = this.alertCtrl.create({
