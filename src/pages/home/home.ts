@@ -86,7 +86,7 @@ export class HomePage {
       return;
     }
 
-    this.partyProvider.getActiveParty().on("value", snap => {
+    this.partyProvider.getRatings().on("value", snap => {
       if(snap.val()) {
         this.app.getRootNav().setRoot('NoRatingsPage');
       }
