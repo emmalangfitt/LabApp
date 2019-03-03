@@ -64,6 +64,7 @@ Google Firebase is used for both user authentication and data storage.
 - *Data Storage:* User data is stored under the party that was active when they registered. For each user, the app stores the information they used to sign up for the app along with their photo and survey responses. Each party subdirectory also houses four booleans that indicate if the party is active and which experimental conditions hold for that party. The lists of user profiles under each party are also initialized with the admin account. For a full breakdown of the database structure and for privacy information, see `DATABASE.md.`
 
 ### Hosting the App
-
+The app will be hosted as a web app at `add link here`, which can be used on desktop and mobile devices. A mobile version will also be available for download through Apple's TestFlight for iOS devices and Google Play for Android devices. 
 
 ### Context
+This app was created for a thesis experiment conducted by Tucker Brown (Dartmouth '19) with support from Dartmouth's Computational Social Affective Neuroscience Laboratory, directed by Luke Chang.
