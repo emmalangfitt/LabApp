@@ -10,7 +10,7 @@ However, the effects of such a system could affect the overall quality of life o
 #### Purpose
 This app will be used in research experiments on reputation effects in social interactions. In each experiment, up to thirty participants will engage in a simulated social gathering. After signing informed consent forms and setting up a device with the app, participants will then mingle throughout the room and rate the other participants after interacting with them. Participants then complete an evaluation survey that asks the participants to rate their experience in terms of multiple social experience factors, including quality, length of conversation, and sincerity.
 
-The app also allows an admin account to change party settings that correlate to different experimental conditions. There are three aspects of the experiment the admin can manipulate through the app: the ability to rate others, the participants' initial ratings, and the weightedness of the averaging equation. In the control trials, users will interact in the social setting without rating the other participants, so the app will block users in this condition from the rating screen. The app can also determine if all users begin at a neutral rating of 2.5, or if they begin evenly distributed between the lowest (1) and the highest (5) rating. Finally, the admin can determine if all new ratings are simply averaged into the user's existing rating or if the rating of the rater weights the average, giving users with higher ratings more influence on the ratings of other users. These conditons are set when the admin adds a new party.
+The app also allows an admin account to change party settings that correlate to different experimental conditions. There are three aspects of the experiment the admin can manipulate through the app: the ability to rate others, the participants' initial ratings, and the weightedness of the averaging equation. In the control trials, users will interact in the social setting without rating the other participants, so the app will block users in this condition from the rating screen. The app can also determine if all users begin at a neutral rating of 2.5 or if they begin evenly distributed between the lowest (1) and the highest (5) rating. Finally, the admin can determine if all new ratings are simply averaged into the user's existing rating or if the rating of the rater weights the average, giving users with higher ratings more influence on the ratings of other users. These conditons are set when the admin adds a new party.
 
 #### Tools
 - *Ionic:* This app utilizes the Ionic Framework for building cross-platform hybrid apps, allowing it to function as both a mobile and web app. This framework is built on Angular and leverages Cordova for mobile device functionality. Full documentation can be found at https://ionicframework.com.
@@ -19,8 +19,15 @@ The app also allows an admin account to change party settings that correlate to 
 
 ### How It Works
 #### User Functionality
+Most users in the app are particpants in the experiment who are able to view other users and rate them on a five-star scale. On the home page of the app, users can see a list of other users with their pictures, name, and current rating and search for other participants by name. They can then click the stars underneath other users and hit save to rate them, but they are restricted to only rating others once within a five-minute timeframe. On the profile page, users can see their own information, edit their email and password, fill out pre- and post-surveys, and log out of the app. 
 
 #### Admin Functionality
+The admin account, controlled by the CosanLab, can add and set the conditions for new parties. The parties are referred to by number throughout the app, and are automatically numbered in increasing order. When the admin adds a party, they can set three different conditions...
+- Rating Other Users: If checked, users will not be able to rate other users and will only be able to access the profile         page of the app
+- Varied Start: If checked, users will begin the party with equally distributed ratings between 1 and 5. If not checked, all users will begin the party with a neutral rating of 2.5
+- Weighted Ratings: If checked, a user with a high rating will affect the ratings of other users more than a user with a low rating. A user's rating of another user is "weighted" by their own rating. If not checked, all ratings are equally averaged into the user's current rating regardless of who does the rating.
+
+The admin also uses this page to set the "active" party, which is the party under which new users are registered. Before each experimental trial, the admin should log into the app and set the party with the target experimental conditions as active. This also naturally groups participant information by the trial that they attended.  
 
 
 ### File Structure
