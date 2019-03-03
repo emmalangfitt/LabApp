@@ -31,7 +31,32 @@ The admin also uses this page to set the "active" party, which is the party unde
 
 
 ### File Structure
-
+The source code for the app is organized as follows...
+```
+src
+--- app
+    --- code for initializing and rendering all components of the app
+    --- imports necessary native plugins, providers, etc.
+--- assets
+    --- icons and images used by the app
+--- components
+    --- code for star rating element for use on multiple app pages
+--- pages
+    --- subfolder for all pages of the app
+    --- includes their html and typescript 
+    --- eleven total pages 
+        --- about, admin, home, login, no-ratings, pre-survey, 
+            post-survey, post-survey-2, reset-password, signup, tabs
+--- providers
+    --- functionality used by multiple pages throughout the app
+    --- mostly act as bridges betweent the app and firebase
+    --- three providers
+        --- auth, profile, party
+--- theme
+    --- css for theming the entire app
+--- validators
+    --- code to make sure entered email is in proper format
+```
 
 ### Authentication and Database Services
 
