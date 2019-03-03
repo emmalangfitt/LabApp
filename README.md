@@ -12,7 +12,7 @@ The app also allows an admin account to change party settings that correlate to 
 
 #### Tools
 - *Ionic:* This app utilizes the Ionic Framework for building cross-platform hybrid apps, allowing it to function as both a mobile and web app. This framework is built on Angular and leverages Cordova for mobile device functionality. Full documentation can be found at https://ionicframework.com.
-- *Firebase:* The app also uses Googles Firebase for user authentication and data storage. Users can sign up with an email and password, which is stored in Firebase for future authentication. The realtime database then synchronizes application data across iOS, Android, and Web devices, and stores it on Firebase's cloud. This allows user ratings to update in realtime based on interactions users have during the party. Firebase also allows the admin to restrict read and write permissions on the database, so participant data can be safely kept in the Firebase cloud. 
+- *Firebase:* The app also uses Googles Firebase for user authentication and data storage. Users can sign up with an email and password, which is stored in Firebase for future authentication. The realtime database then synchronizes application data across iOS, Android, and Web devices, and stores it on Firebase's cloud. This allows user ratings to update in realtime based on interactions users have during the party. Firebase also allows the admin to restrict read and write permissions on the database, so participant data can be safely kept in the Firebase cloud. Full documentation can be found at https://firebase.google.com.
 
 
 ### How It Works
