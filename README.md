@@ -37,6 +37,7 @@ src
 --- app
     --- code for initializing and rendering all components of the app
     --- imports necessary native plugins, providers, etc.
+    --- contains environment.ts that connects app to Firebase database
 --- assets
     --- icons and images used by the app
 --- components
