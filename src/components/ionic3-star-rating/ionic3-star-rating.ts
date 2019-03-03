@@ -1,3 +1,7 @@
+/*
+  Adapted from but highly similar to melwin007's ionic3-star-rating
+  found here https://github.com/melwinVincent/ionic3-star-rating
+*/
 import { Component, Input } from '@angular/core';
 import { Events } from 'ionic-angular'
 
@@ -51,7 +55,7 @@ export class Ionic3StarRatingComponent {
   @Input()
   defaultIcon : string = 'ios-star-outline'; // icon of inactive star
   @Input()
-  halfIcon : string = 'ios-half-star'; // icon of half star 
+  halfIcon : string = 'ios-half-star'; // icon of half star
 
   Math: any;
   parseFloat : any;
