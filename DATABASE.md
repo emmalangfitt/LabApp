@@ -14,7 +14,7 @@ labapp
         --- active: boolean
         --- number: number
         --- noratings: boolean
-        --- varied start: boolean
+        --- variedstart: boolean
         --- weightedrankings: boolean
         --- userProfile
             --- userID: string
@@ -38,5 +38,25 @@ labapp
 ```
 
 ### Breakdown of Subdirectories
+- **labapp:** This is the main directory of the app's storage. All data from the app is stored within this bucket. It immediately contains `active`, a number that indicates which party is the active party at the given moment, and a subdirectory of all existing parties called `parties`. 
+- **parties:** This subdirectory contains all the existing parties as subdirectories, referred to by number. Parties are automatically numbered in increasing order when added to the app, starting with number one.
+- **individual party subdirectory:** Each party is its own directory containing all the data needed to run the app under that party's conditions. This subdirectory contains...
+  - `active`: a boolean that is true if that party is the current active party
+  - `number`: the number of the party, matching the directory title
+  - `noratings`: a boolean that is true if users cannot rate other users of the app
+  - `variedstart`: a boolean that is true if users start with ratings equally distributed between 1 and 6
+  - `weightedrankings`: a boolean that is true if highly rated users have more impact on the ratings of other users
+  - `userProfile`: a subdirectory of all the users registered under that active party
+- **userProfile:** Within each party, this subdirectory holds all the users registered under that party and their associated data. This includes... 
+  - `first`: a string of the user's first name
+  - `last`: a string of the user's last name
+  - `email`: a string of the user's email
+  - `role`: a boolean that is true if user is an admin
+  - `photo`: a string indicating the storage location of the user's photo
+  - `num`: a number indicating the user's participant number (between 1 and 30)
+  - `rating`: a number indicating the user's current own rating
+  - `ratings`: a list of numbers indicating which other users have been rated by the current user (index 12 contains a 0 if the current user has not rated participant 12 and a 1 if they have within the last time frame)
+  - `preSurvey`: a subdirectory of the user's answers to the pre-survey, data types depend on the questions asked but entries are titled `q1, q2, q3...`
+  - `postSurvey`: a subdirectory of the user's answers to the post-survey, data types depend on the questions asked but entries are titled `q1, q2, q3...`
 
 ### Privacy
