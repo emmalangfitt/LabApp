@@ -17,7 +17,7 @@ The app also allows an admin account to change party settings that correlate to 
 - *Firebase:* The app also uses Googles Firebase for user authentication and data storage. Users can sign up with an email and password, which is stored in Firebase for future authentication. The realtime database then synchronizes application data across iOS, Android, and Web devices, and stores it on Firebase's cloud. This allows user ratings to update in realtime based on interactions users have during the party. Firebase also allows the admin to restrict read and write permissions on the database, so participant data can be safely kept in the Firebase cloud. Full documentation can be found at https://firebase.google.com.
 
 
-### How It Works
+### Features
 #### User Functionality
 Most users in the app are particpants in the experiment who are able to view other users and rate them on a five-star scale. On the home page of the app, users can see a list of other users with their pictures, name, and current rating and search for other participants by name. They can then click the stars underneath other users and hit save to rate them, but they are restricted to only rating others once within a five-minute timeframe. On the profile page, users can see their own information, edit their email and password, fill out pre- and post-surveys, and log out of the app. 
 
