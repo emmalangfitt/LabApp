@@ -60,4 +60,4 @@ labapp
   - `postSurvey`: a subdirectory of the user's answers to the post-survey, data types depend on the questions asked but entries are titled `q1, q2, q3...`
 
 ### Privacy
-Firebase allows the owner of a database to set privacy rules. At minimum, Nosedive's database requires the user to be authenticated with the app to access data of any kind. Beyond this, users only have write access to data under their own subdirectory and read access to other users' names and ratings. This ensures that the experiment's survey and consent responses are not shared between users of the app.
+Firebase allows the owner of a database to set privacy rules. At minimum, Nosedive's database requires the user to be authenticated with the app to access data of any kind. Beyond this, users only have write access to data under their own subdirectory and read access to other users' names and ratings. This ensures that the experiment's survey and consent responses are not shared between users of the app or to parties outside of the experiment
