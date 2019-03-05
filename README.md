@@ -17,7 +17,7 @@ The app also allows an admin account to change party settings that correlate to 
 - *Firebase:* The app also uses Googles Firebase for user authentication and data storage. Users can sign up with an email and password, which is stored in Firebase for future authentication. The realtime database then synchronizes application data across iOS, Android, and Web devices, and stores it on Firebase's cloud. This allows user ratings to update in realtime based on interactions users have during the party. Firebase also allows the admin to restrict read and write permissions on the database, so participant data can be safely kept in the Firebase cloud. Full documentation can be found at https://firebase.google.com.
 
 
-### How It Works
+### Features
 #### User Functionality
 Most users in the app are particpants in the experiment who are able to view other users and rate them on a five-star scale. On the home page of the app, users can see a list of other users with their pictures, name, and current rating and search for other participants by name. They can then click the stars underneath other users and hit save to rate them, but they are restricted to only rating others once within a five-minute timeframe. On the profile page, users can see their own information, edit their email and password, fill out pre- and post-surveys, and log out of the app. 
 
@@ -62,7 +62,7 @@ src
 ### Authentication and Database Services
 Google Firebase is used for both user authentication and data storage. 
 - *Authentication:* Users can sign up for the app with an email and password, but do not have to confirm their email. The email is only used if the user needs to reset their password. This information is stored in Firebase's authentication service with a unique user ID, then the ID and email are copied into the database. From the Authentication tab on Firebase, CosanLab can also reset passwords and disable or delete accounts. In the future, other ways of authenticating accounts (Facebook, Google, etc.) could be added, but since users aren't expected to return to the app after the experiment the only method currently available is email.
-- *Data Storage:* User data is stored under the party that was active when they registered. For each user, the app stores the information they used to sign up for the app along with their photo and survey responses. Each party subdirectory also houses four booleans that indicate if the party is active and which experimental conditions hold for that party. The lists of user profiles under each party are also initialized with the admin account. For a full breakdown of the database structure and for privacy information, see `DATABASE.md.`
+- *Data Storage:* User data is stored under the party that was active when they registered. For each user, the app stores the information they used to sign up for the app along with their photo and survey responses. Each party subdirectory also houses four booleans that indicate if the party is active and which experimental conditions hold for that party. The lists of user profiles under each party are also initialized with the admin account. For a full breakdown of the database structure and for privacy information, see [DATABASE.md](https://github.com/emmalangfitt/Nosedive/blob/master/DATABASE.md).
 
 ### Hosting the App
 The app will be hosted as a web app at `add link here`, which can be used on desktop and mobile devices. A mobile version will also be available for download through Apple's TestFlight for iOS devices and Google Play for Android devices. 
