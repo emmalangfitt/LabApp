@@ -44,7 +44,7 @@ export class AdminPage {
   logOut(): void {
     this.authProvider.logoutUser().then(() => {
       this.navCtrl.setRoot(LoginPage);
-    });s
+    });
   }
 
   /*

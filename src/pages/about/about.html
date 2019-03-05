@@ -17,25 +17,27 @@ About Page
   </ion-navbar>
 </ion-header>
 
-<ion-content padding text-center>
-  <ion-img class="prof-pic" src="{{userProfile?.photo}}"></ion-img>
-  <h1>{{userProfile?.first}} {{userProfile?.last}}</h1>
-  <ionic3-star-rating
-        activeIcon = "ios-star"
-        defaultIcon = "ios-star-outline"
-        activeColor = "#488aff"
-        defaultColor = "#f4f4f4"
-        readonly="true"
-        [rating]=userProfile?.rating>
-    </ionic3-star-rating>
-  <p>Rating: {{userProfile?.rating | number:'1.1-1'}}</p>
+<ion-content padding>
+  <ion-card text-center>
+    <ion-card-content>
+      <ion-img class="prof-pic" src="{{userProfile?.photo}}"></ion-img>
+      <h1>{{userProfile?.first}} {{userProfile?.last}}</h1>
+      <ionic3-star-rating
+            activeIcon = "ios-star"
+            defaultIcon = "ios-star-outline"
+            activeColor = "#F9D054"
+            defaultColor = "#f4f4f4"
+            readonly="true"
+            [rating]=userProfile?.rating>
+        </ionic3-star-rating>
+      <p>Rating: {{userProfile?.rating | number:'1.1-1'}}</p>
 
-  <button ion-button (click)="updateEmail()">Update Email</button>
-  <button ion-button (click)="updatePassword()">Update Password</button>
-  <button ion-button (click)="updateName()">Update Name</button>
-  <button ion-button (click)="takePicture()">Take Photo</button>
-  <button ion-button (click)="goToPreSurvey()" [disabled]="this.profileProvider.preSurveySubmitted">Pre-Survey</button>
-  <button ion-button (click)="goToPostSurvey()" [disabled]="this.profileProvider.postSurveySubmitted">Post-Survey</button>
-
-
+      <button ion-button (click)="updateEmail()">Update Email</button>
+      <button ion-button (click)="updatePassword()">Update Password</button>
+      <button ion-button (click)="updateName()">Update Name</button>
+      <button ion-button (click)="takePicture()">Take Photo</button>
+      <button ion-button (click)="goToPreSurvey()" [disabled]="this.profileProvider.preSurveySubmitted">Pre-Survey</button>
+      <button ion-button (click)="goToPostSurvey()" [disabled]="this.profileProvider.postSurveySubmitted">Post-Survey</button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

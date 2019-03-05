@@ -47,7 +47,7 @@ export class Ionic3StarRatingComponent {
   @Input()
   readonly: string = "false"; // if rating can be changed or not
   @Input()
-  activeColor : string = '#488aff'; // color of active stars
+  activeColor : string = '#F9D054'; // color of active stars
   @Input()
   defaultColor : string = '#f4f4f4'; // color of inactive stars
   @Input()
@@ -99,7 +99,7 @@ export class Ionic3StarRatingComponent {
   */
   setColor(rating: number, index: number): string {
     if ((rating-index) >= .3) {
-      return '#488aff';
+      return '#F9D054';
     } else {
       return '#f4f4f4';
     }

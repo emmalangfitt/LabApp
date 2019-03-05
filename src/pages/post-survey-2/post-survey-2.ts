@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, reorderArray } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from "@angular/forms";
 import { ProfileProvider } from "../../providers/profile/profile";
+import { PartyProvider } from "../../providers/party/party";
 import firebase from 'firebase/app';
 
 
@@ -17,10 +18,12 @@ export class PostSurvey_2Page {
   public interactedProfList: Array<any>; // only users that were interacted with
   public profRef:firebase.database.Reference; // reference to all user profiles
   public interactedProfRef:firebase.database.Reference; // reference to interacted user profiles
+  public activePartyNum: number; // number of active party
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public partyProvider: PartyProvider,
     public profileProvider: ProfileProvider,
     formBuilder: FormBuilder) {
       this.postSurveyForm = formBuilder.group({

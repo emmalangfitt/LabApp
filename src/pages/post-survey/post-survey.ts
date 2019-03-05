@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, reorderArray } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from "@angular/forms";
 import { ProfileProvider } from "../../providers/profile/profile";
+import { PartyProvider } from "../../providers/party/party";
 import firebase from 'firebase/app';
 
 @IonicPage()
@@ -14,9 +15,11 @@ export class PostSurveyPage {
   public allProfList: Array<any>; // all users in active party
   public rankedProfList: Array<any>; // ranked version of allProfList
   public profRef:firebase.database.Reference; // reference to all user profiles
+  public activePartyNum: number; // number of active party
 
   constructor(
     public navCtrl: NavController,
+    public partyProvider: PartyProvider,
     public navParams: NavParams,
     public profileProvider: ProfileProvider,
     formBuilder: FormBuilder) {
