@@ -21,6 +21,8 @@ The app also allows an admin account to change party settings that correlate to 
 #### User Functionality
 Most users in the app are particpants in the experiment who are able to view other users and rate them on a five-star scale. On the home page of the app, users can see a list of other users with their pictures, name, and current rating and search for other participants by name. They can then click the stars underneath other users and hit save to rate them, but they are restricted to only rating others once within a five-minute timeframe. On the profile page, users can see their own information, edit their email and password, fill out pre- and post-surveys, and log out of the app. 
 
+<img src="screenshots/IMG_5759.PNG" alt="login" width="250"/> <img src="screenshots/IMG_5761.PNG" alt="ratings" width="250"/> <img src="screenshots/IMG_5762.PNG" alt="about" width="250"/>
+
 #### Admin Functionality
 The admin account, controlled by the CosanLab, can add and set the conditions for new parties. The parties are referred to by number throughout the app, and are automatically numbered in increasing order. When the admin adds a party, they can set three different conditions...
 - Rating Other Users: If checked, users will not be able to rate other users and will only be able to access the profile         page of the app
@@ -29,6 +31,7 @@ The admin account, controlled by the CosanLab, can add and set the conditions fo
 
 The admin also uses this page to set the "active" party, which is the party under which new users are registered. Before each experimental trial, the admin should log into the app and set the party with the target experimental conditions as active. This also naturally groups participant information by the trial that they attended.  
 
+<img src="screenshots/IMG_5763.PNG" alt="admin" width="250"/>
 
 ### File Structure
 The source code for the app is organized as follows...
@@ -65,7 +68,7 @@ Google Firebase is used for both user authentication and data storage.
 - *Data Storage:* User data is stored under the party that was active when they registered. For each user, the app stores the information they used to sign up for the app along with their photo and survey responses. Each party subdirectory also houses four booleans that indicate if the party is active and which experimental conditions hold for that party. The lists of user profiles under each party are also initialized with the admin account. For a full breakdown of the database structure and for privacy information, see [DATABASE.md](https://github.com/emmalangfitt/Nosedive/blob/master/DATABASE.md).
 
 ### Hosting the App
-The app will be hosted as a web app at `add link here`, which can be used on desktop and mobile devices. A mobile version will also be available for download through Apple's TestFlight for iOS devices and Google Play for Android devices. 
+The app will be hosted as a web app at `https://labapp-55218.firebaseapp.com` for testing. A mobile version will also be available for download through Apple's TestFlight for iOS devices and Google Play for Android devices. 
 
 ### Context
 This app was created for a thesis experiment conducted by Tucker Brown (Dartmouth '19) with support from Dartmouth's Computational Social Affective Neuroscience Laboratory, directed by Luke Chang.
