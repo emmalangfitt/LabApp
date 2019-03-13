@@ -23,18 +23,18 @@ Home Page
           <img class="prof-pic" src="{{prof?.photo}}"/>
           <ion-card-content>
             <ion-card-title>{{ prof?.first }} {{ prof?.last }}</ion-card-title>
-            <p> Participant Number: {{ prof?.num }} </p>
+            <!--<p> Participant Number: {{ prof?.num }} </p>-->
             <ionic3-star-rating
                   activeIcon = "ios-star"
                   defaultIcon = "ios-star-outline"
                   halfIcon = "ios-half-star"
-                  activeColor = "#F9D054"
+                  activeColor = "#88A0A8"
                   defaultColor = "#f4f4f4"
                   [readonly]= "canRateString(prof?.num, prof?.self)"
                   [rating]=prof?.rating>
             </ionic3-star-rating>
-            <p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>
-            <button ion-button [disabled]="canRate(prof?.num, prof?.self)" (click)="saveRating(prof?.id, prof?.rating, prof?.num)">Save</button>
+            <!--<p> Rating: {{ prof?.rating | number:'1.1-1'}} </p>-->
+            <button ion-button [disabled]="canRate(prof?.num, prof?.self)" (click)="saveRating(prof?.id, prof?.rating, prof?.num)">rate</button>
           </ion-card-content>
         </ion-card>
       </ion-col>

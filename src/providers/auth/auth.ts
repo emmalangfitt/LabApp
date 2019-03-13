@@ -65,7 +65,7 @@ export class AuthProvider {
         firebase
           .database()
           .ref(`/parties/`+ this.activePartyNum +`/userProfile/${newUserCredential.user.uid}/photo`)
-          .set('https://firebasestorage.googleapis.com/v0/b/labapp-55218.appspot.com/o/logo.png?alt=media&token=20b4b85d-a03f-4893-a531-195c87438386');
+          .set('https://firebasestorage.googleapis.com/v0/b/labapp-55218.appspot.com/o/prof-placeholder.png?alt=media&token=627989b9-0d63-44c0-9464-b14020e5d6d0');
         // creates subdirectory for pre-survey answers
         firebase
           .database()
@@ -80,11 +80,11 @@ export class AuthProvider {
         var numUsers = 0;
         var activePartyNum = this.activePartyNum;
         firebase.database().ref(`/parties/`+ this.activePartyNum +`/userProfile/`).once("value", function(snapshot) {
-          numUsers = snapshot.numChildren();
+          numUsers = snapshot.numChildren(); // start numbering at one due to admin
           firebase
             .database()
             .ref(`/parties/`+ activePartyNum +`/userProfile/${newUserCredential.user.uid}/num`)
-            .set(numUsers);
+            .set(numUsers-1);
         });
 
         // varies the initial user ratings evenly from one to five if the active
@@ -123,8 +123,8 @@ export class AuthProvider {
         // initialize array of rated users so the current user can
         // rate everyone except themselves
         this.listOfRatings = new Array();
-        for (var i = 0; i < 30; i++) {
-          if ( (i+1) == numUsers ) {
+        for (var i = 0; i <= 30; i++) {
+          if ( (i) == (numUsers-1) ) {
             this.listOfRatings.push(1);
           } else {
             this.listOfRatings.push(0);

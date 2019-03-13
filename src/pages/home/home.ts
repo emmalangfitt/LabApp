@@ -167,11 +167,11 @@ export class HomePage {
       if (weighted){
         firebase.database().ref('/parties/'+ this.activePartyNum +`/userProfile/` + id)
         .update({rating: ((profRating*old) + (this.enteredRating*add))});
-        this.profileProvider.getUserRatings(num-1).set(1);
+        this.profileProvider.getUserRatings(num).set(1);
       } else {
         firebase.database().ref('/parties/'+ this.activePartyNum +`/userProfile/` + id)
         .update({rating: ((profRating + this.enteredRating)/ 2)});
-        this.profileProvider.getUserRatings(num-1).set(1);
+        this.profileProvider.getUserRatings(num).set(1);
       }
     });
   }
@@ -187,8 +187,8 @@ export class HomePage {
       num = snapshot.val();
     });
 
-    for (var i = 0; i < 30; i++) {
-      if (i != num-1) { // making sure they cannot rate themselves
+    for (var i = 0; i <= 30; i++) {
+      if (i != num) { // making sure they cannot rate themselves
         this.profileProvider.getUserRatings(i).set(0);
       }
     }
@@ -220,7 +220,7 @@ export class HomePage {
     within the past fives minutes.
   */
   canRateString(num: number, isSelf: boolean, ): string {
-    var ratingsRef = this.profileProvider.getUserRatings(num-1);
+    var ratingsRef = this.profileProvider.getUserRatings(num);
     var bool;
     ratingsRef.on('value', function(snapshot) {
       bool = snapshot.val();
@@ -239,7 +239,7 @@ export class HomePage {
     within the past fives minutes.
   */
   canRate(num: number, isSelf: boolean): boolean {
-    var ratingsRef = this.profileProvider.getUserRatings(num-1);
+    var ratingsRef = this.profileProvider.getUserRatings(num);
     var bool;
     ratingsRef.on('value', function(snapshot) {
       bool = snapshot.val();

@@ -34,20 +34,53 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #ffffff, //F9ADA0 (pink) //F8C9C0 488aff
-  secondary:  #32db64,
+  primary:    #6C6F7D,
+  secondary:  #88A0A8,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222
 );
 
-$background-color: #F9EDEA !default; //FFE8E8 F8C9C0
-$background-ios-color: #F9EDEA !default;
-$background-md-color: #F9EDEA !default;
+$background-color: #E6E8EF !default; //D7DAE5
+$background-ios-color: #E6E8EF !default;
+$background-md-color: #E6E8EF !default;
 $card-ios-background-color: #ffffff !default;
 $card-md-background-color: #ffffff !default;
 $card-background-color: #ffffff !default;
+$toolbar-background: #ffffff;
+$tabs-background: #ffffff;
 
+$card-ios-box-shadow: none;
+$card-box-shadow: none;
+$card-md-box-shadow: none;
+$searchbar-ios-input-box-shadow: none;
+$searchbar-input-box-shadow: none;
+$searchbar-md-input-box-shadow: none;
+
+$button-ios-height: 1.5em;
+$button-md-height: 1.5em;
+$button-height: 1.5em;
+
+@font-face {
+  font-family: 'Signika', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/Signika-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Signika', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/Signika-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Signika', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/Signika-SemiBold.ttf');
+}
 
 // App iOS Variables
 // --------------------------------------------------

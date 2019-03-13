@@ -5,4 +5,15 @@ page-about {
     border-radius: 50%;
     overflow: hidden;
   }
+
+  h1 {
+    font-family: 'Signika', sans-serif;
+    font-weight: 600 !important;
+    margin-top: 1% !important;
+    margin-bottom: .5% !important;
+  }
+
+  div {
+    margin-bottom: .5vw;
+  }
 }

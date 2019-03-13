@@ -22,13 +22,15 @@ Admin Page
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding text-center>
-  <ion-list>
-      <ion-item *ngFor="let party of partyList">
-        <button ion-button [color]=fillType(party?.active) (click)="makeActive(party?.number)">Party {{party?.number}}</button>
-      </ion-item>
-  </ion-list>
-
-  <button ion-button (click)="addPartyAlert()">add</button>
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+          <ion-item *ngFor="let party of partyList">
+            <button ion-button [color]=fillType(party?.active) (click)="makeActive(party?.number)">Party {{party?.number}}</button>
+          </ion-item>
+      </ion-list>
+      <button ion-button (click)="addPartyAlert()">add</button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
