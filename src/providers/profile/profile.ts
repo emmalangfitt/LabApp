@@ -130,25 +130,31 @@ export class ProfileProvider {
     sets in firebase whether or not user consented to the experiment,
     value comes from consent alert on the home page
   */
-  setConsent(consent: boolean): Promise<any> {
-    return this.userProfile.update({consent});
-  }
+  // setConsent(consent: boolean): Promise<any> {
+  //   return this.userProfile.update({consent});
+  // }
 
   /*
     saves user answers from the pre-survey
   */
-  updatePreSurvey(year: string, gender:
-    string, major: string, option: string,
-    rating: number, shortAnswer: string): Promise<any> {
-      return this.preSurvey.update({year, gender, major, option, rating, shortAnswer});
+  updatePreSurvey(q1: string, q2: string,
+    q3: string, q4: string, q5: string,
+    q6: string, q7: string, q8: number,
+    q9: number, q10: number, q11: number,
+    q12: number, q13: number, q14: number,
+    q15: number, q16: number, q17: number,): Promise<any> {
+      return this.preSurvey.update({q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17});
   }
 
   /*
     saves user answers from the post-survey
   */
-  updatePostSurvey(option: string, rating: number,
-    shortAnswer: string, profList: Array<any>, checkedProfList: Array<any>): Promise<any> {
-      return this.postSurvey.update({option, rating, shortAnswer, profList, checkedProfList});
+  updatePostSurvey(q1: number, q2: number,
+    q3: number, q4: number, q5: number,
+    q6: number, q7: number, q8: number,
+    q9: number, q10: number, q11: number,
+    checkedProfList: Array<any>, q13: string, q14: string): Promise<any> {
+      return this.postSurvey.update({q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, checkedProfList, q13, q14});
   }
 
   /*

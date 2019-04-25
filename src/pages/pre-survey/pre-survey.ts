@@ -17,12 +17,23 @@ export class PreSurveyPage {
     public profileProvider: ProfileProvider,
     formBuilder: FormBuilder) {
       this.preSurveyForm = formBuilder.group({
-        year: new FormControl(''),
-        gender: new FormControl(''),
-        major: new FormControl(''),
-        option: new FormControl(''),
-        rating: new FormControl(''),
-        shortAnswer: new FormControl('')
+        q1: new FormControl(''),
+        q2: new FormControl(''),
+        q3: new FormControl(''),
+        q4: new FormControl(''),
+        q5: new FormControl(''),
+        q6: new FormControl(''),
+        q7: new FormControl(''),
+        q8: new FormControl(''),
+        q9: new FormControl(''),
+        q10: new FormControl(''),
+        q11: new FormControl(''),
+        q12: new FormControl(''),
+        q13: new FormControl(''),
+        q14: new FormControl(''),
+        q15: new FormControl(''),
+        q16: new FormControl(''),
+        q17: new FormControl(''),
       });
     }
 
@@ -30,14 +41,25 @@ export class PreSurveyPage {
     save answers to firebase and push to next page
   */
   submit(): void {
-    const year: string = this.preSurveyForm.value.year;
-    const gender: string = this.preSurveyForm.value.gender;
-    const major: string = this.preSurveyForm.value.major;
-    const option: string = this.preSurveyForm.value.option;
-    const rating: number = this.preSurveyForm.value.rating;
-    const shortAnswer: string = this.preSurveyForm.value.shortAnswer;
+    const q1: string = this.preSurveyForm.value.q1;
+    const q2: string = this.preSurveyForm.value.q2;
+    const q3: string = this.preSurveyForm.value.q3;
+    const q4: string = this.preSurveyForm.value.q4;
+    const q5: string = this.preSurveyForm.value.q5;
+    const q6: string = this.preSurveyForm.value.q6;
+    const q7: string = this.preSurveyForm.value.q7;
+    const q8: number = this.preSurveyForm.value.q8;
+    const q9: number = this.preSurveyForm.value.q9;
+    const q10: number = this.preSurveyForm.value.q10;
+    const q11: number = this.preSurveyForm.value.q11;
+    const q12: number = this.preSurveyForm.value.q12;
+    const q13: number = this.preSurveyForm.value.q13;
+    const q14: number = this.preSurveyForm.value.q14;
+    const q15: number = this.preSurveyForm.value.q15;
+    const q16: number = this.preSurveyForm.value.q16;
+    const q17: number = this.preSurveyForm.value.q17;
 
-    this.profileProvider.updatePreSurvey(year, gender, major, option, rating, shortAnswer);
+    this.profileProvider.updatePreSurvey(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17);;
     this.navCtrl.pop();
     this.profileProvider.preSurveySubmitted = true;
   }

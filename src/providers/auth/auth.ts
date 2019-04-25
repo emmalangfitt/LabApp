@@ -76,7 +76,7 @@ export class AuthProvider {
           .ref(`/parties/`+ this.activePartyNum +`/userProfile/${newUserCredential.user.uid}/postSurvey/`);
 
         // sets user number as the nth person to sign up under the active party
-        // EACH PARTY CAN ONLY HOLD UP TO THIRTY USERS
+        // EACH PARTY CAN ONLY HOLD UP TO FIFTY USERS
         var numUsers = 0;
         var activePartyNum = this.activePartyNum;
         firebase.database().ref(`/parties/`+ this.activePartyNum +`/userProfile/`).once("value", function(snapshot) {
@@ -95,13 +95,13 @@ export class AuthProvider {
 
           if (varied) {
             var rate;
-            if (numUsers <= 6) { // first six users are rated 1 to start
+            if (numUsers % 5 == 0) { // first six users are rated 1 to start
               rate = 1;
-            } else if (numUsers > 6 && numUsers <= 12) { // next six are rated 2
+            } else if (numUsers % 5 == 1) { // next six are rated 2
               rate = 2;
-            } else if (numUsers > 12 && numUsers <= 18) { // then 3
+            } else if (numUsers  % 5 == 2) { // then 3
               rate = 3;
-            } else if (numUsers > 18 && numUsers <= 24) { // then 4
+            } else if (numUsers  % 5 == 3) { // then 4
               rate = 4;
             } else { // the final six start rated at a 5
               rate = 5;
@@ -123,7 +123,7 @@ export class AuthProvider {
         // initialize array of rated users so the current user can
         // rate everyone except themselves
         this.listOfRatings = new Array();
-        for (var i = 0; i <= 30; i++) {
+        for (var i = 0; i <= 50; i++) {
           if ( (i) == (numUsers-1) ) {
             this.listOfRatings.push(1);
           } else {

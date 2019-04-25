@@ -16,72 +16,119 @@ Pre Survey  Page
 <ion-content padding text-center>
   <form [formGroup]="preSurveyForm" (submit)="submit()" novalidate>
 
-    <!-- date selection question -->
+    <!-- Demographic Questions -->
+    <h5>What is your age?</h5>
     <ion-item>
-      <ion-label color="dark">Graduation Year</ion-label>
-      <ion-datetime
-        displayFormat="YYYY"
-        pickerFormat="YYYY"
-        placeholder="Select Date"
-        max="2025"
-        min="2015"
-        formControlName="year">
-      </ion-datetime>
+      <ion-textarea formControlName="q1" placeholder="Enter your answer here"></ion-textarea>
     </ion-item>
 
-    <!-- item selection question -->
     <ion-item>
-      <ion-label color="dark">Gender</ion-label>
-      <ion-select placeholder="Select One" formControlName="gender">
+      <ion-label color="dark">What is your gender?</ion-label>
+      <ion-select placeholder="Select One" formControlName="q2">
         <ion-option>Female</ion-option>
         <ion-option>Male</ion-option>
-        <ion-option>Other</ion-option>
+        <ion-option>Other/Prefer not to say</ion-option>
       </ion-select>
     </ion-item>
 
-    <!-- item selection question -->
     <ion-item>
-      <ion-label color="dark">Major</ion-label>
-      <ion-select placeholder="Select Best Match" formControlName="major">
-        <ion-option>Arts & Humanities</ion-option>
-        <ion-option>Interdisciplinary</ion-option>
-        <ion-option>Sciences</ion-option>
-        <ion-option>Social Sciences</ion-option>
-        <ion-option>Other</ion-option>
+      <ion-label color="dark">Are you Hispanic?</ion-label>
+      <ion-select placeholder="Select One" formControlName="q3">
+        <ion-option>Yes</ion-option>
+        <ion-option>No</ion-option>
       </ion-select>
     </ion-item>
 
-    <!-- radio selection question -->
-    <h5>Selection question goes here?</h5>
-    <ion-list radio-group formControlName="option">
-      <ion-item>
-        <ion-label>option one</ion-label>
-        <ion-radio slot="start" value="biff" checked></ion-radio>
-      </ion-item>
+    <ion-item>
+      <ion-label color="dark">What race do you identify with?</ion-label>
+      <ion-select placeholder="Select One" formControlName="q4">
+        <ion-option>Asian/Asian American</ion-option>
+        <ion-option>Black/African American</ion-option>
+        <ion-option>Native American/Alaskan Native</ion-option>
+        <ion-option>Native Hawaiian/Pacific Islander</ion-option>
+        <ion-option>White/Caucasian</ion-option>
+        <ion-option>Other/Unknown</ion-option>
+      </ion-select>
+    </ion-item>
 
-      <ion-item>
-        <ion-label>option two</ion-label>
-        <ion-radio slot="start" value="griff"></ion-radio>
-      </ion-item>
+    <h5>What is your native language?</h5>
+    <ion-item>
+      <ion-textarea formControlName="q5" placeholder="Enter your answer here"></ion-textarea>
+    </ion-item>
 
-      <ion-item>
-        <ion-label>option three</ion-label>
-        <ion-radio slot="start" value="buford"></ion-radio>
-      </ion-item>
-    </ion-list>
+    <h5>What is your city of birth? (city, state, country)</h5>
+    <ion-item>
+      <ion-textarea formControlName="q6" placeholder="Enter your answer here"></ion-textarea>
+    </ion-item>
 
-    <!-- rating scale question -->
-    <h5>Rating question goes here?</h5>
-    <ion-range min="0" max="7" [(ngModel)]="saturation" color="primary" snaps="true" formControlName="rating">
-        <ion-label range-left>0</ion-label>
-        <ion-label range-right>7</ion-label>
+    <ion-item>
+      <ion-label color="dark">Are you right or left handed?</ion-label>
+      <ion-select placeholder="Select One" formControlName="q7">
+        <ion-option>Right</ion-option>
+        <ion-option>Left</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Personality Questions -->
+    <h5>I see myself as extraverted, enthusiastic.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q8">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
     </ion-range>
 
-    <!-- short answer question -->
-    <h5>Short answer question goes here?</h5>
-    <ion-item>
-      <ion-textarea formControlName="shortAnswer" placeholder="Enter your answer here"></ion-textarea>
-    </ion-item>
+    <h5>I see myself as critical, quarrelsome</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q9">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
+
+    <h5>I see myself as dependable, self-disciplined.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q10">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
+
+    <h5>I see myself as anxious, easily upset.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q11">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
+
+    <h5>I see myself as open to new experiences, complex.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q12">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
+
+    <h5>I see myself as reserved, quiet.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q13">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
+
+    <h5>I see myself as sympathetic, warm.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q14">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
+
+    <h5>I see myself as disorganized, careless.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q15">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
+
+    <h5>I see myself as calm, emotionally stable.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q16">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
+
+    <h5>I see myself as conventional, uncreative.</h5>
+    <ion-range min="0" max="7" color="primary" snaps="true" formControlName="q17">
+        <ion-label range-left>Disagree Strongly</ion-label>
+        <ion-label range-right>Agree Strongly</ion-label>
+    </ion-range>
 
     <h5>Warning: You may not edit the survey once you've submitted your responses.</h5>
     <button ion-button type="submit">Submit</button>

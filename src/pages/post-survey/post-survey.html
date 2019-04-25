@@ -17,53 +17,85 @@ Post Survey Page
 <ion-content padding text-center>
   <form [formGroup]="postSurveyForm" (submit)="submit()" novalidate>
 
-    <!-- radio selection question -->
-    <h5>Selection question goes here?</h5>
-    <ion-list radio-group formControlName="option">
-      <ion-item>
-        <ion-label>option one</ion-label>
-        <ion-radio slot="start" value="biff" checked></ion-radio>2
-      </ion-item>
-
-      <ion-item>
-        <ion-label>option two</ion-label>
-        <ion-radio slot="start" value="griff"></ion-radio>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>option three</ion-label>
-        <ion-radio slot="start" value="buford"></ion-radio>
-      </ion-item>
-    </ion-list>
-
-    <!-- scale rating question -->
-    <h5>Rating question goes here?</h5>
-    <ion-range min="0" max="7" [(ngModel)]="saturation" color="primary" snaps="true" formControlName="rating">
-        <ion-label range-left>0</ion-label>
-        <ion-label range-right>7</ion-label>
+    <!-- q1 -->
+    <h5>Please rate your overall experience in the experiment:</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q1">
+        <ion-label range-left>Poor</ion-label>
+        <ion-label range-right>Great</ion-label>
     </ion-range>
 
-    <!-- short answer question -->
-    <h5>Short answer question goes here?</h5>
-    <ion-item>
-      <ion-textarea formControlName="shortAnswer" placeholder="Enter your answer here"></ion-textarea>
-    </ion-item>
+    <!-- q2 -->
+    <h5>Please rate the average quality of your individual social interactions within this experiment:</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q2">
+        <ion-label range-left>Poor</ion-label>
+        <ion-label range-right>Great</ion-label>
+    </ion-range>
 
-    <!-- rank multiple options question -->
-    <h5>Rank your interaction from blank to blank</h5>
-    <ion-list reorder="true" (ionItemReorder)="reorderItem($event)">
-        <ion-item *ngFor="let prof of rankedProfList">
-          <ion-avatar item-left>
-            <img [src]="prof?.photo"/>
-          </ion-avatar>
-          <ion-label>
-            {{ prof?.first }} {{ prof?.last }}
-          </ion-label>
-        </ion-item>
-    </ion-list>
+    <!-- q3 -->
+    <h5>Please rate how genuine you found your social interactions to be:</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q3">
+        <ion-label range-left>Not at all</ion-label>
+        <ion-label range-right>Very</ion-label>
+    </ion-range>
 
-    <!-- checkbox question -->
-    <h5>Check who you knew previously</h5>
+    <!-- q4 -->
+    <h5>To what extent did you find you were self-conscious about/monitoring your own behavior throughout the experiment:</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q4">
+        <ion-label range-left>Not at all</ion-label>
+        <ion-label range-right>Very</ion-label>
+    </ion-range>
+
+    <!-- q5 -->
+    <h5>Please rate your overall level of social anxiety throughout the experiment:</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q5">
+        <ion-label range-left>Very Low</ion-label>
+        <ion-label range-right>Very High</ion-label>
+    </ion-range>
+
+    <!-- q6 -->
+    <h5>To what extent did you feel that people were trying to impress you/win your favor?</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q6">
+        <ion-label range-left>Not at all</ion-label>
+        <ion-label range-right>Very much so</ion-label>
+    </ion-range>
+
+    <!-- q7 -->
+    <h5>To what extent did you view each social interaction as a means to an end?</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q7">
+        <ion-label range-left>Not at all</ion-label>
+        <ion-label range-right>Very much so</ion-label>
+    </ion-range>
+
+    <!-- q8 -->
+    <h5>Please rate your overall interest in what other participants had to say?</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q8">
+        <ion-label range-left>Very low</ion-label>
+        <ion-label range-right>Very high</ion-label>
+    </ion-range>
+
+    <!-- q9 -->
+    <h5>To what extent do you feel you made genuine connections with other participants?</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q9">
+        <ion-label range-left>Not at all</ion-label>
+        <ion-label range-right>Very much so</ion-label>
+    </ion-range>
+
+    <!-- q10 -->
+    <h5>To what extent did you gravitate towards people you recognized/knew previously?</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q10">
+        <ion-label range-left>Not at all</ion-label>
+        <ion-label range-right>A lot</ion-label>
+    </ion-range>
+
+    <!-- q11 -->
+    <h5>Did you find that you focused most of your attention on just a few people or tried to branch out to as many people as you could?</h5>
+    <ion-range min="0" max="10" color="primary" snaps="true" formControlName="q11">
+        <ion-label range-left>Just a few</ion-label>
+        <ion-label range-right>As many as possible</ion-label>
+    </ion-range>
+
+    <!-- q12 -->
+    <h5>Who did you interact with during the experiment?</h5>
     <ion-list>
       <ion-item *ngFor="let prof of allProfList">
         <ion-avatar item-right>
@@ -74,7 +106,19 @@ Post Survey Page
       </ion-item>
     </ion-list>
 
+    <!-- q13 -->
+    <h5>Who did you enjoy interacting with the most? Why?</h5>
+    <ion-item>
+      <ion-textarea formControlName="q13" placeholder="Enter your answer here"></ion-textarea>
+    </ion-item>
+
+    <!-- q14 -->
+    <h5>Please supply us with any feedback/observations that you have from your experience in the trial.</h5>
+    <ion-item>
+      <ion-textarea formControlName="q14" placeholder="Enter your answer here"></ion-textarea>
+    </ion-item>
+
     <h5>Warning: You may not edit the survey once you've submitted your responses.</h5>
-    <button ion-button type="submit">Next</button>
+    <button ion-button type="submit">Submit</button>
   </form>
 </ion-content>

@@ -24,9 +24,19 @@ export class PostSurveyPage {
     public profileProvider: ProfileProvider,
     formBuilder: FormBuilder) {
       this.postSurveyForm = formBuilder.group({
-        option: new FormControl(''),
-        rating: new FormControl(''),
-        shortAnswer: new FormControl('')
+        q1: new FormControl(''),
+        q2: new FormControl(''),
+        q3: new FormControl(''),
+        q4: new FormControl(''),
+        q5: new FormControl(''),
+        q6: new FormControl(''),
+        q7: new FormControl(''),
+        q8: new FormControl(''),
+        q9: new FormControl(''),
+        q10: new FormControl(''),
+        q11: new FormControl(''),
+        q13: new FormControl(''),
+        q14: new FormControl(''),
       });
 
       // load lists once profile provider is initialized
@@ -41,12 +51,14 @@ export class PostSurveyPage {
         this.profRef.on('value', profList => {
           let profs = [];
           profList.forEach(prof => {
-            profs.push({
-              photo: prof.val().photo,
-              first: prof.val().first,
-              last: prof.val().last,
-              isChecked: false
-            });
+            if(!prof.val().role){
+              profs.push({
+                photo: prof.val().photo,
+                first: prof.val().first,
+                last: prof.val().last,
+                isChecked: false
+              });
+            }
             return false;
           });
 
@@ -59,11 +71,40 @@ export class PostSurveyPage {
   /*
     save answers to firebase and push to next page
   */
+  // submit(): void {
+  //   const option: string = this.postSurveyForm.value.option;
+  //   const rating: number = this.postSurveyForm.value.rating;
+  //   const shortAnswer: string = this.postSurveyForm.value.shortAnswer;
+  //   var checkedProfList = [];
+  //
+  //   this.allProfList.forEach(prof => {
+  //     if (prof.isChecked) {
+  //       checkedProfList.push(prof);
+  //     }
+  //   });
+  //
+  //   this.profileProvider.updatePostSurvey(option, rating, shortAnswer, this.rankedProfList, checkedProfList);
+  //   this.navCtrl.push('PostSurvey_2Page');
+  // }
+
+  /*
+    save answers to firebase and push to next page
+  */
   submit(): void {
-    const option: string = this.postSurveyForm.value.option;
-    const rating: number = this.postSurveyForm.value.rating;
-    const shortAnswer: string = this.postSurveyForm.value.shortAnswer;
+    const q1: number = this.postSurveyForm.value.q1;
+    const q2: number = this.postSurveyForm.value.q2;
+    const q3: number = this.postSurveyForm.value.q3;
+    const q4: number = this.postSurveyForm.value.q4;
+    const q5: number = this.postSurveyForm.value.q5;
+    const q6: number = this.postSurveyForm.value.q6;
+    const q7: number = this.postSurveyForm.value.q7;
+    const q8: number = this.postSurveyForm.value.q8;
+    const q9: number = this.postSurveyForm.value.q9;
+    const q10: number = this.postSurveyForm.value.q10;
+    const q11: number = this.postSurveyForm.value.q11;
     var checkedProfList = [];
+    const q13: string = this.postSurveyForm.value.q13;
+    const q14: string = this.postSurveyForm.value.q14;
 
     this.allProfList.forEach(prof => {
       if (prof.isChecked) {
@@ -71,8 +112,9 @@ export class PostSurveyPage {
       }
     });
 
-    this.profileProvider.updatePostSurvey(option, rating, shortAnswer, this.rankedProfList, checkedProfList);
-    this.navCtrl.push('PostSurvey_2Page');
+    this.profileProvider.updatePostSurvey(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, checkedProfList, q13, q14);
+    this.profileProvider.postSurveySubmitted = true;
+    this.navCtrl.pop();
   }
 
   /*

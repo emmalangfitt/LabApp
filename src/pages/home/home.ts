@@ -15,7 +15,7 @@ export class HomePage {
   public enteredRating: number; // rating entered by user
   public loadedProfList:Array<any>; // list of all existing users, not edited by search bar
   public profRef:firebase.database.Reference; // reference to all users in active party
-  public consent: boolean; // if current user consents to experiment based on alert response
+  //public consent: boolean; // if current user consents to experiment based on alert response
   public activePartyNum: number; // number of active party
   private once: boolean = true; // ensures initialization is only run once
 
@@ -121,7 +121,7 @@ export class HomePage {
       this.resetRating();
     }, 5*60*1000);
 
-    this.requestConsent();
+    //this.requestConsent();
   }
 
   /*
@@ -276,7 +276,8 @@ export class HomePage {
     this.profList = this.profList.filter((v) => {
       if(v.first && q || v.lant && q) {
         if (v.first.toLowerCase().indexOf(q.toLowerCase()) > -1
-        || v.last.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+        || v.last.toLowerCase().indexOf(q.toLowerCase()) > -1
+        || v.num.toString().toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
         return false;
@@ -287,34 +288,34 @@ export class HomePage {
   /*
     Present alert with consent infirmation and save if the user accepts or not
   */
-  public requestConsent(): void {
-    this.consentAlert('consent message goes here it will be super long').then(confirm => {
-      this.profileProvider.setConsent(confirm);
-    })
-  }
+  // public requestConsent(): void {
+  //   this.consentAlert('consent message goes here it will be super long').then(confirm => {
+  //     this.profileProvider.setConsent(confirm);
+  //   })
+  // }
 
   /*
     Create alert with consent infirmation and allow user to accept or not
   */
-  private consentAlert(message: string): Promise<boolean> {
-    let resolveFunction: (confirm: boolean) => void;
-    let promise = new Promise<boolean>(resolve => {
-      resolveFunction = resolve;
-    });
-
-    let alert = this.alertCtrl.create({
-      title: 'Consent Collection',
-      message: message,
-      enableBackdropDismiss: false,
-      buttons: [ {
-        text: 'Cancel',
-        handler: () => resolveFunction(false)
-      }, {
-        text: 'I Agree',
-        handler: () => resolveFunction(true)
-      } ]
-    });
-    alert.present();
-    return promise;
-  }
+  // private consentAlert(message: string): Promise<boolean> {
+  //   let resolveFunction: (confirm: boolean) => void;
+  //   let promise = new Promise<boolean>(resolve => {
+  //     resolveFunction = resolve;
+  //   });
+  //
+  //   let alert = this.alertCtrl.create({
+  //     title: 'Consent Collection',
+  //     message: message,
+  //     enableBackdropDismiss: false,
+  //     buttons: [ {
+  //       text: 'Cancel',
+  //       handler: () => resolveFunction(false)
+  //     }, {
+  //       text: 'I Agree',
+  //       handler: () => resolveFunction(true)
+  //     } ]
+  //   });
+  //   alert.present();
+  //   return promise;
+  // }
 }
