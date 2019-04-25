@@ -44,7 +44,7 @@ labapp
   - `active`: a boolean that is true if that party is the current active party
   - `number`: the number of the party, matching the directory title
   - `noratings`: a boolean that is true if users cannot rate other users of the app
-  - `variedstart`: a boolean that is true if users start with ratings equally distributed between 1 and 6
+  - `variedstart`: a boolean that is true if users start with ratings equally distributed between 1 and 5
   - `weightedrankings`: a boolean that is true if highly rated users have more impact on the ratings of other users
   - `userProfile`: a subdirectory of all the users registered under that active party
 - **userProfile:** Within each party, this subdirectory holds all the users registered under that party and their associated data. This includes... 
